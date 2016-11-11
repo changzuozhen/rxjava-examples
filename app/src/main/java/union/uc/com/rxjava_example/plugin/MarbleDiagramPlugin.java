@@ -18,24 +18,6 @@ import union.uc.com.rxjava_example.ui.Utils;
  */
 public class MarbleDiagramPlugin implements DisplayPluginManager.Plugin {
     private MarbleDiagram mMarbleDiagram = new MarbleDiagram();
-
-    @Override
-    public Tuple.Tuple2<Observable<View>, View> getView(final Context context, String key) {
-        Integer[] ids = mMarbleDiagram.get(key);
-        if (ids == null) {
-            return new Tuple.Tuple2<>(Observable.<View>empty(), null);
-        }
-        final LinearLayout linearLayout = new LinearLayout(context);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        for (Integer id : ids) {
-            ImageView imageView = new ImageView(context);
-            imageView.setImageResource(id);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Utils.dipToPixels(context, 200)));
-            linearLayout.addView(imageView);
-        }
-        return new Tuple.Tuple2<>(Observable.just((View) linearLayout), (View) linearLayout);
-    }
-
     //  @Override
     //  public Tuple.Tuple2<Observable<View>, View> getView(final Context context, String key) {
     //    final LinearLayout linearLayout = new LinearLayout(context);
@@ -90,6 +72,23 @@ public class MarbleDiagramPlugin implements DisplayPluginManager.Plugin {
     //  }
     //
     private Map<String, String[]> mKeyToUrl;
+
+    @Override
+    public Tuple.Tuple2<Observable<View>, View> getView(final Context context, String key) {
+        Integer[] ids = mMarbleDiagram.get(key);
+        if (ids == null) {
+            return new Tuple.Tuple2<>(Observable.<View>empty(), null);
+        }
+        final LinearLayout linearLayout = new LinearLayout(context);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        for (Integer id : ids) {
+            ImageView imageView = new ImageView(context);
+            imageView.setImageResource(id);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Utils.dipToPixels(context, 200)));
+            linearLayout.addView(imageView);
+        }
+        return new Tuple.Tuple2<>(Observable.just((View) linearLayout), (View) linearLayout);
+    }
 
     private void add(String key, String... urls) {
         mKeyToUrl.put(key, urls);

@@ -9,11 +9,11 @@ import java.util.concurrent.Executor;
  * Created by wangli on 4/5/16.
  */
 public class UIThreadExecutor implements Executor {
-  private final Handler mHandler = new Handler(Looper.getMainLooper());
-  public static UIThreadExecutor SINGLETON = new UIThreadExecutor();
+    public static UIThreadExecutor SINGLETON = new UIThreadExecutor();
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
 
-  @Override
-  public void execute(Runnable command) {
-    mHandler.post(command);
-  }
+    @Override
+    public void execute(Runnable command) {
+        mHandler.post(command);
+    }
 }

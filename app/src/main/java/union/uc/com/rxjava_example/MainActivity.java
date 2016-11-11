@@ -51,8 +51,8 @@ import union.uc.com.rxjava_example.sample.RWFileActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private ListView mListView;
     protected ActivityAdapter mListAdapter;
+    private ListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,54 +122,6 @@ public class MainActivity extends AppCompatActivity
         mListView.setAdapter(mListAdapter);
     }
 
-    protected class ActivityAdapter extends BaseAdapter {
-        private List<Tuple.Tuple2<String, Class<?>>> mActivityClses = new ArrayList<>();
-
-        public void register(String name, Class<?> activityCls) {
-            mActivityClses.add(new Tuple.Tuple2<String, Class<?>>(name, activityCls));
-        }
-
-        @Override
-        public int getCount() {
-            return mActivityClses.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return mActivityClses.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TextView tv;
-            if (convertView != null) {
-                tv = (TextView) convertView;
-            } else {
-                tv = new TextView(getApplicationContext());
-            }
-            tv.setGravity(Gravity.CENTER);
-            final Tuple.Tuple2<String, Class<?>> item = mActivityClses.get(position);
-            tv.setText(item.item1);
-            tv.setTextColor(Color.BLACK);
-            tv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this, item.item2));
-                }
-            });
-            AbsListView.LayoutParams lp =
-                    new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 100);
-            tv.setLayoutParams(lp);
-            return tv;
-
-        }
-    }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -222,5 +174,53 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    protected class ActivityAdapter extends BaseAdapter {
+        private List<Tuple.Tuple2<String, Class<?>>> mActivityClses = new ArrayList<>();
+
+        public void register(String name, Class<?> activityCls) {
+            mActivityClses.add(new Tuple.Tuple2<String, Class<?>>(name, activityCls));
+        }
+
+        @Override
+        public int getCount() {
+            return mActivityClses.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mActivityClses.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView tv;
+            if (convertView != null) {
+                tv = (TextView) convertView;
+            } else {
+                tv = new TextView(getApplicationContext());
+            }
+            tv.setGravity(Gravity.CENTER);
+            final Tuple.Tuple2<String, Class<?>> item = mActivityClses.get(position);
+            tv.setText(item.item1);
+            tv.setTextColor(Color.BLACK);
+            tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, item.item2));
+                }
+            });
+            AbsListView.LayoutParams lp =
+                    new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 100);
+            tv.setLayoutParams(lp);
+            return tv;
+
+        }
     }
 }

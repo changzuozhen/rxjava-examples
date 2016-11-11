@@ -14,122 +14,122 @@ import union.uc.com.rxjava_example.contants.Constants;
  */
 public class ConnectableObservableActivity extends APIBaseActivity {
 
-  @Override
-  protected void onRegisterAction(ActionRegistery registery) {
-    registery.add(Constants.ConnectableObservable.connect, new Runnable() {
-      @Override
-      public void run() {
-        Observable<Integer> o = Observable.create(new Observable.OnSubscribe<Integer>() {
-          @Override
-          public void call(Subscriber<? super Integer> subscriber) {
-            for (int i = 0; i < 5; ++i) {
-              subscriber.onNext(i);
-              sleep(500);
-            }
-            subscriber.onCompleted();
-          }
-        }).subscribeOn(Schedulers.newThread()).observeOn(Schedulers.newThread());
-        o.subscribe(new Action1<Integer>() {
-          @Override
-          public void call(Integer integer) {
-            log("s1:" + integer);
-          }
-        });
-        sleep(1000);
-        ConnectableObservable<Integer> co = o.publish();
-        co.subscribe(new Action1<Integer>() {
-          @Override
-          public void call(Integer integer) {
-            log("s2:" + integer);
-          }
-        });
-
-        log("begin connect");
-        co.connect();
-      }
-    });
-    registery.add(Constants.ConnectableObservable.publish, new Runnable() {
-      @Override
-      public void run() {
-        log("showed in connect!");
-      }
-    });
-    registery.add(Constants.ConnectableObservable.replay, new Runnable() {
-      @Override
-      public void run() {
-        Observable<Integer> o = Observable.create(new Observable.OnSubscribe<Integer>() {
-          @Override
-          public void call(Subscriber<? super Integer> subscriber) {
-            for (int i = 0; i < 5; ++i) {
-              subscriber.onNext(i);
-              sleep(500);
-            }
-            subscriber.onCompleted();
-          }
-        }).subscribeOn(Schedulers.newThread()).observeOn(Schedulers.newThread());
-        o.subscribe(new Action1<Integer>() {
-          @Override
-          public void call(Integer integer) {
-            log("s1:" + integer);
-          }
-        });
-        sleep(1000);
-        ConnectableObservable<Integer> co = o.publish();
-        co.subscribe(new Action1<Integer>() {
-          @Override
-          public void call(Integer integer) {
-            log("s2:" + integer);
-          }
-        });
-
-        log("begin connect");
-        co.connect();
-      }
-    });
-    registery.add(Constants.ConnectableObservable.refCount, new Runnable() {
-      @Override
-      public void run() {
-        ConnectableObservable<Integer> co =
-          Observable.create(new Observable.OnSubscribe<Integer>() {
+    @Override
+    protected void onRegisterAction(ActionRegistery registery) {
+        registery.add(Constants.ConnectableObservable.connect, new Runnable() {
             @Override
-            public void call(Subscriber<? super Integer> subscriber) {
-              for (int i = 0; i < 5; ++i) {
-                subscriber.onNext(i);
-                sleep(500);
-              }
-              subscriber.onCompleted();
+            public void run() {
+                Observable<Integer> o = Observable.create(new Observable.OnSubscribe<Integer>() {
+                    @Override
+                    public void call(Subscriber<? super Integer> subscriber) {
+                        for (int i = 0; i < 5; ++i) {
+                            subscriber.onNext(i);
+                            sleep(500);
+                        }
+                        subscriber.onCompleted();
+                    }
+                }).subscribeOn(Schedulers.newThread()).observeOn(Schedulers.newThread());
+                o.subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        log("s1:" + integer);
+                    }
+                });
+                sleep(1000);
+                ConnectableObservable<Integer> co = o.publish();
+                co.subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        log("s2:" + integer);
+                    }
+                });
+
+                log("begin connect");
+                co.connect();
             }
-          }).subscribeOn(Schedulers.newThread()).publish();
+        });
+        registery.add(Constants.ConnectableObservable.publish, new Runnable() {
+            @Override
+            public void run() {
+                log("showed in connect!");
+            }
+        });
+        registery.add(Constants.ConnectableObservable.replay, new Runnable() {
+            @Override
+            public void run() {
+                Observable<Integer> o = Observable.create(new Observable.OnSubscribe<Integer>() {
+                    @Override
+                    public void call(Subscriber<? super Integer> subscriber) {
+                        for (int i = 0; i < 5; ++i) {
+                            subscriber.onNext(i);
+                            sleep(500);
+                        }
+                        subscriber.onCompleted();
+                    }
+                }).subscribeOn(Schedulers.newThread()).observeOn(Schedulers.newThread());
+                o.subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        log("s1:" + integer);
+                    }
+                });
+                sleep(1000);
+                ConnectableObservable<Integer> co = o.publish();
+                co.subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        log("s2:" + integer);
+                    }
+                });
 
-        Subscription s1 = co.subscribe(new Action1<Integer>() {
-          @Override
-          public void call(Integer integer) {
-            log("s1:" + integer);
-          }
+                log("begin connect");
+                co.connect();
+            }
         });
-        Subscription s2 = co.subscribe(new Action1<Integer>() {
-          @Override
-          public void call(Integer integer) {
-            log("s2:" + integer);
-          }
-        });
-        sleep(1000);
-        log("begin refcount!");
-        Observable<Integer> o = co.refCount();
-        o.subscribe(new Action1<Integer>() {
-          @Override
-          public void call(Integer integer) {
-            log("obs:" + integer);
-          }
-        });
+        registery.add(Constants.ConnectableObservable.refCount, new Runnable() {
+            @Override
+            public void run() {
+                ConnectableObservable<Integer> co =
+                        Observable.create(new Observable.OnSubscribe<Integer>() {
+                            @Override
+                            public void call(Subscriber<? super Integer> subscriber) {
+                                for (int i = 0; i < 5; ++i) {
+                                    subscriber.onNext(i);
+                                    sleep(500);
+                                }
+                                subscriber.onCompleted();
+                            }
+                        }).subscribeOn(Schedulers.newThread()).publish();
 
-        sleep(1000);
-        log("begin connect!");
-        co.connect();
-        s1.unsubscribe();
-        s2.unsubscribe();
-        log("both disconnected!");
-      }
-    });
-  }
+                Subscription s1 = co.subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        log("s1:" + integer);
+                    }
+                });
+                Subscription s2 = co.subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        log("s2:" + integer);
+                    }
+                });
+                sleep(1000);
+                log("begin refcount!");
+                Observable<Integer> o = co.refCount();
+                o.subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        log("obs:" + integer);
+                    }
+                });
+
+                sleep(1000);
+                log("begin connect!");
+                co.connect();
+                s1.unsubscribe();
+                s2.unsubscribe();
+                log("both disconnected!");
+            }
+        });
+    }
 }

@@ -15,37 +15,37 @@ import union.uc.com.rxjava_example.base.UIThreadExecutor;
  */
 //run on init and ui thread
 public class DisplayPluginManager {
-  private static final DisplayPluginManager INSTANCE = new DisplayPluginManager();
-  private List<Plugin> mPlugins = new ArrayList<>();
+    private static final DisplayPluginManager INSTANCE = new DisplayPluginManager();
+    private List<Plugin> mPlugins = new ArrayList<>();
 
-  public static DisplayPluginManager singleton() {
-    return INSTANCE;
-  }
+    public static DisplayPluginManager singleton() {
+        return INSTANCE;
+    }
 
-  public interface Plugin {
-    Tuple.Tuple2<Observable<View>, View> getView(Context context, String key);
-  }
+    public void register(final Plugin plugin) {
+        UIThreadExecutor.SINGLETON.execute(new Runnable() {
+            @Override
+            public void run() {
+                mPlugins.add(plugin);
+            }
+        });
+    }
 
-  public void register(final Plugin plugin) {
-    UIThreadExecutor.SINGLETON.execute(new Runnable() {
-      @Override
-      public void run() {
-        mPlugins.add(plugin);
-      }
-    });
-  }
+    public void unregister(final Plugin plugin) {
+        UIThreadExecutor.SINGLETON.execute(new Runnable() {
+            @Override
+            public void run() {
+                mPlugins.remove(plugin);
+            }
+        });
+    }
 
-  public void unregister(final Plugin plugin) {
-    UIThreadExecutor.SINGLETON.execute(new Runnable() {
-      @Override
-      public void run() {
-        mPlugins.remove(plugin);
-      }
-    });
-  }
+    public List<Plugin> getAll() {
+        return mPlugins;
+    }
 
-  public List<Plugin> getAll() {
-    return mPlugins;
-  }
+    public interface Plugin {
+        Tuple.Tuple2<Observable<View>, View> getView(Context context, String key);
+    }
 
 }

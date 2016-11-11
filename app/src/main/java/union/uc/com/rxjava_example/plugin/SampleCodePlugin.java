@@ -19,38 +19,38 @@ import us.feras.mdv.MarkdownView;
  * Created by wangli on 4/16/16.
  */
 public class SampleCodePlugin implements DisplayPluginManager.Plugin {
-  @Override
-  public Tuple.Tuple2<Observable<View>, View> getView(final Context context, String key) {
-    MarkdownView markdownView = new MarkdownView(context){
-      @Override
-      public boolean onTouchEvent(MotionEvent event) {
-        requestDisallowInterceptTouchEvent(true);
-        return super.onTouchEvent(event);
-      }
-    };
-    markdownView.setBackgroundColor(Color.LTGRAY);
-    final Reference<MarkdownView> ref = new WeakReference<>(markdownView);
-    Observable<View> o = Observable.just(key)
-                                   // .observeOn(Schedulers.io())
-                                   .map(new Func1<String, String>() {
-                                     @Override
-                                     public String call(String s) {
-                                       return mSampleCode.get(s);
-                                     }
-                                   })
-                                   .observeOn(Schedulers.from(UIThreadExecutor.SINGLETON))
-                                   .map(new Func1<String, View>() {
-                                     @Override
-                                     public View call(String s) {
-                                       MarkdownView mv = ref.get();
-                                       if (mv != null) {
-                                         mv.loadMarkdown(s);
-                                       }
-                                       return mv;
-                                     }
-                                   });
-    return new Tuple.Tuple2<>(o, (View) markdownView);
-  }
+    private SampleCode mSampleCode = new SampleCode();
 
-  private SampleCode mSampleCode = new SampleCode();
+    @Override
+    public Tuple.Tuple2<Observable<View>, View> getView(final Context context, String key) {
+        MarkdownView markdownView = new MarkdownView(context) {
+            @Override
+            public boolean onTouchEvent(MotionEvent event) {
+                requestDisallowInterceptTouchEvent(true);
+                return super.onTouchEvent(event);
+            }
+        };
+        markdownView.setBackgroundColor(Color.LTGRAY);
+        final Reference<MarkdownView> ref = new WeakReference<>(markdownView);
+        Observable<View> o = Observable.just(key)
+                // .observeOn(Schedulers.io())
+                .map(new Func1<String, String>() {
+                    @Override
+                    public String call(String s) {
+                        return mSampleCode.get(s);
+                    }
+                })
+                .observeOn(Schedulers.from(UIThreadExecutor.SINGLETON))
+                .map(new Func1<String, View>() {
+                    @Override
+                    public View call(String s) {
+                        MarkdownView mv = ref.get();
+                        if (mv != null) {
+                            mv.loadMarkdown(s);
+                        }
+                        return mv;
+                    }
+                });
+        return new Tuple.Tuple2<>(o, (View) markdownView);
+    }
 }

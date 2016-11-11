@@ -8,13 +8,13 @@ import union.uc.com.rxjava_example.contants.Constants;
  */
 public class ReactiveStreamActivity extends APIBaseActivity {
 
-  @Override
-  protected void onRegisterAction(ActionRegistery registery) {
-    registery.add(Constants.ReactiveStream.materialize, new Runnable() {
-      @Override
-      public void run() {
+    @Override
+    protected void onRegisterAction(ActionRegistery registery) {
+        registery.add(Constants.ReactiveStream.materialize, new Runnable() {
+            @Override
+            public void run() {
 
-      }
-    });
-  }
+            }
+        });
+    }
 }
