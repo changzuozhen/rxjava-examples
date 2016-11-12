@@ -83,8 +83,9 @@ public class MarbleDiagramPlugin implements DisplayPluginManager.Plugin {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         for (Integer id : ids) {
             ImageView imageView = new ImageView(context);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             imageView.setImageResource(id);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Utils.dipToPixels(context, 200)));
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Utils.dipToPixels(context, 250)));
             linearLayout.addView(imageView);
         }
         return new Tuple.Tuple2<>(Observable.just((View) linearLayout), (View) linearLayout);
