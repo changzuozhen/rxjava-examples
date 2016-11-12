@@ -167,7 +167,6 @@ public abstract class APIBaseActivity extends Activity {
 //        StackTraceElement[] ste = new Throwable().getStackTrace();
         final String log = build(tipLine, ste);
         Log.d(tag, log);
-
         //ensure log on ui thread
         runOnUiThread(new Runnable() {
             @Override
