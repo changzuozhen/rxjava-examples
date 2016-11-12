@@ -22,12 +22,13 @@ import union.uc.com.rxjava_example.contants.Constants;
  * Created by wangli on 4/12/16.
  */
 public class PluginActivity extends APIBaseActivity {
+    private static final String TAG = "PluginActivity";
     ScheduledExecutorService SERVICE = Executors.newScheduledThreadPool(3);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        log("from now on, all operation is hooked!");
+        log("from now on, all operation is hooked!", TAG);
         registerHook();
     }
 
@@ -36,12 +37,12 @@ public class PluginActivity extends APIBaseActivity {
             @Override
             public void handleError(Throwable e) {
                 super.handleError(e);
-                log("hook handleError:" + e);
+                log("hook handleError:" + e, TAG);
             }
 
             @Override
             protected String render(Object item) throws InterruptedException {
-                log("hook render:" + item);
+                log("hook render:" + item, TAG);
                 return super.render(item);
             }
         });
@@ -49,57 +50,57 @@ public class PluginActivity extends APIBaseActivity {
                 .registerObservableExecutionHook(new RxJavaObservableExecutionHook() {
                     @Override
                     public <T> Observable.OnSubscribe<T> onCreate(Observable.OnSubscribe<T> f) {
-                        log("hook Observable::onCreate");
+                        log("hook Observable::onCreate", TAG);
                         return super.onCreate(f);
                     }
 
                     @Override
                     public <T> Observable.OnSubscribe<T> onSubscribeStart(Observable<? extends T> observableInstance,
                                                                           Observable.OnSubscribe<T> onSubscribe) {
-                        log("hook onSubscribeStart");
+                        log("hook onSubscribeStart", TAG);
                         return super.onSubscribeStart(observableInstance, onSubscribe);
                     }
 
                     @Override
                     public <T> Subscription onSubscribeReturn(Subscription subscription) {
-                        log("hook onSubscribeReturn");
+                        log("hook onSubscribeReturn", TAG);
                         return super.onSubscribeReturn(subscription);
                     }
 
                     @Override
                     public <T> Throwable onSubscribeError(Throwable e) {
-                        log("hook onSubscribeError");
+                        log("hook onSubscribeError", TAG);
                         return super.onSubscribeError(e);
                     }
 
                     @Override
                     public <T, R> Observable.Operator<? extends R, ? super T> onLift(Observable.Operator<? extends R, ? super T> lift) {
-                        log("hook onLift");
+                        log("hook onLift", TAG);
                         return super.onLift(lift);
                     }
                 });
         RxJavaPlugins.getInstance().registerSchedulersHook(new RxJavaSchedulersHook() {
             @Override
             public Scheduler getComputationScheduler() {
-                log("hook getComputationScheduler, You can replace the default one");
+                log("hook getComputationScheduler, You can replace the default one", TAG);
                 return super.getComputationScheduler();
             }
 
             @Override
             public Scheduler getIOScheduler() {
-                log("hook getIOScheduler, You can replace the default one");
+                log("hook getIOScheduler, You can replace the default one", TAG);
                 return super.getIOScheduler();
             }
 
             @Override
             public Scheduler getNewThreadScheduler() {
-                log("hook getNewThreadScheduler, You can replace the default one");
+                log("hook getNewThreadScheduler, You can replace the default one", TAG);
                 return super.getNewThreadScheduler();
             }
 
             @Override
             public Action0 onSchedule(Action0 action) {
-                log("hook onSchedule, You can replace the default one");
+                log("hook onSchedule, You can replace the default one", TAG);
                 return super.onSchedule(action);
             }
         });
@@ -113,7 +114,7 @@ public class PluginActivity extends APIBaseActivity {
                 Observable.range(1, 10).observeOn(Schedulers.io()).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }

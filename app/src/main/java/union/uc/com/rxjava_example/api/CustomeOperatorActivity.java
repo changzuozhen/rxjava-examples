@@ -13,6 +13,7 @@ import union.uc.com.rxjava_example.contants.Constants;
  * Created by wangli on 4/12/16.
  */
 public class CustomeOperatorActivity extends APIBaseActivity {
+    private static final String TAG = "CustomeOperatorActivity";
 
     @Override
     protected void onRegisterAction(ActionRegistery registery) {
@@ -29,7 +30,7 @@ public class CustomeOperatorActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer);
+                                log(integer, TAG);
                             }
                         });
             }
@@ -48,19 +49,19 @@ public class CustomeOperatorActivity extends APIBaseActivity {
             return new Subscriber<T>() {
                 @Override
                 public void onCompleted() {
-                    log("onComplete");
+                    log("onComplete", TAG);
                     subscriber.onCompleted();
                 }
 
                 @Override
                 public void onError(Throwable e) {
-                    log("onError:" + e);
+                    log("onError:" + e, TAG);
                     subscriber.onError(e);
                 }
 
                 @Override
                 public void onNext(T t) {
-                    log("onNext:" + t);
+                    log("onNext:" + t, TAG);
                     try {
                         R r = mTransformer.call(t);
                         subscriber.onNext(r);

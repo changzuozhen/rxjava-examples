@@ -13,6 +13,7 @@ import union.uc.com.rxjava_example.contants.Constants;
  * Created by wangli on 4/12/16.
  */
 public class StringActivity extends APIBaseActivity {
+    private static final String TAG = "StringActivity";
 
     @Override
     protected void onRegisterAction(ActionRegistery registery) {
@@ -23,7 +24,7 @@ public class StringActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s);
+                                log(s, TAG);
                             }
                         });
             }
@@ -35,7 +36,7 @@ public class StringActivity extends APIBaseActivity {
                         Charset.forName("UTF-8")).subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        log(s);
+                        log(s, TAG);
                     }
                 });
             }
@@ -46,7 +47,7 @@ public class StringActivity extends APIBaseActivity {
                 StringObservable.encode(Observable.just("abc"), "UTF-8").subscribe(new Action1<byte[]>() {
                     @Override
                     public void call(byte[] bytes) {
-                        log(bytes.length);
+                        log(bytes.length, TAG);
                     }
                 });
             }
@@ -58,7 +59,7 @@ public class StringActivity extends APIBaseActivity {
                         .subscribe(new Action1<byte[]>() {
                             @Override
                             public void call(byte[] bytes) {
-                                log(bytes.length);
+                                log(bytes.length, TAG);
                             }
                         });
             }
@@ -69,7 +70,7 @@ public class StringActivity extends APIBaseActivity {
                 StringObservable.join(Observable.just("abc", "def"), "#").subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        log(s);
+                        log(s, TAG);
                     }
                 });
             }
@@ -80,7 +81,7 @@ public class StringActivity extends APIBaseActivity {
                 StringObservable.split(Observable.just("ab#cd#ef"), "#").subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        log(s);
+                        log(s, TAG);
                     }
                 });
             }
@@ -92,7 +93,7 @@ public class StringActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s);
+                                log(s, TAG);
                             }
                         });
             }

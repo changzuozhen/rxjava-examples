@@ -21,6 +21,8 @@ import union.uc.com.rxjava_example.contants.Constants;
  * Created by wangli on 4/12/16.
  */
 public class UtilityActivity extends APIBaseActivity {
+    private static final String TAG = "UtilityActivity";
+
     @Override
     protected void onRegisterAction(ActionRegistery registery) {
         registery.add(Constants.Utility.materialize, new Runnable() {
@@ -30,15 +32,15 @@ public class UtilityActivity extends APIBaseActivity {
                 o1.subscribe(new Action1<Notification<Integer>>() {
                     @Override
                     public void call(Notification<Integer> integerNotification) {
-                        log("******");
-                        log("kind:" + integerNotification.getKind());
-                        log("value:" + integerNotification.getValue());
+                        log("******", TAG);
+                        log("kind:" + integerNotification.getKind(), TAG);
+                        log("value:" + integerNotification.getValue(), TAG);
                     }
                 });
                 o1.dematerialize().subscribe(new Action1() {
                     @Override
                     public void call(Object o) {
-                        log(o.toString());
+                        log(o.toString(), TAG);
                     }
                 });
             }
@@ -49,7 +51,7 @@ public class UtilityActivity extends APIBaseActivity {
                 Observable.just(1, 2).timestamp().subscribe(new Action1<Timestamped<Integer>>() {
                     @Override
                     public void call(Timestamped<Integer> integerTimestamped) {
-                        log("" + integerTimestamped.getValue() + " " + integerTimestamped.getTimestampMillis());
+                        log("" + integerTimestamped.getValue() + " " + integerTimestamped.getTimestampMillis(), TAG);
                     }
                 });
             }
@@ -62,7 +64,7 @@ public class UtilityActivity extends APIBaseActivity {
                     public void call(Subscriber<? super Integer> subscriber) {
                         for (int i = 0; i < 3; i++) {
                             subscriber.onNext(i);
-                            sleep(1000);
+                            sleep(1000, TAG);
                         }
                         subscriber.onError(new Exception("xx"));
                         subscriber.onCompleted();
@@ -71,34 +73,34 @@ public class UtilityActivity extends APIBaseActivity {
                 o.observeOn(Schedulers.computation()).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("no serialize1 on compute:" + integer);
+                        log("no serialize1 on compute:" + integer, TAG);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        log("Exception no serialize1 on compute:" + throwable.getMessage());
+                        log("Exception no serialize1 on compute:" + throwable.getMessage(), TAG);
                     }
                 });
                 o.observeOn(Schedulers.io()).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("no serialize1 on io:" + integer);
+                        log("no serialize1 on io:" + integer, TAG);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        log("Exception no serialize1 on io:" + throwable.getMessage());
+                        log("Exception no serialize1 on io:" + throwable.getMessage(), TAG);
                     }
                 });
                 o.serialize().subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("serialize:" + integer);
+                        log("serialize:" + integer, TAG);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        log("Exception serialize1:" + throwable.getMessage());
+                        log("Exception serialize1:" + throwable.getMessage(), TAG);
                     }
                 });
             }
@@ -110,14 +112,14 @@ public class UtilityActivity extends APIBaseActivity {
                 o.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("s1:" + integer);
+                        log("s1:" + integer, TAG);
                     }
                 });
 
                 o.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("s2:" + integer);
+                        log("s2:" + integer, TAG);
                     }
                 });
             }
@@ -128,7 +130,7 @@ public class UtilityActivity extends APIBaseActivity {
                 Observable.range(1, 2).observeOn(Schedulers.io()).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("" + integer + " on " + Thread.currentThread().getName());
+                        log("" + integer + " on " + Thread.currentThread().getName(), TAG);
                     }
                 });
             }
@@ -142,7 +144,7 @@ public class UtilityActivity extends APIBaseActivity {
                         subscriber.onNext(0);
                         subscriber.onNext(1);
                         subscriber.onCompleted();
-                        log("here in: " + Thread.currentThread().getName());
+                        log("here in: " + Thread.currentThread().getName(), TAG);
                     }
                 })
                         .subscribeOn(Schedulers.computation())
@@ -150,7 +152,7 @@ public class UtilityActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log("" + integer + " on " + Thread.currentThread().getName());
+                                log("" + integer + " on " + Thread.currentThread().getName(), TAG);
                             }
                         });
             }
@@ -161,12 +163,12 @@ public class UtilityActivity extends APIBaseActivity {
                 Observable.range(1, 10).doOnEach(new Action1<Notification<? super Integer>>() {
                     @Override
                     public void call(Notification<? super Integer> notification) {
-                        log("doOnEach:" + notification.getKind() + " " + notification.getValue());
+                        log("doOnEach:" + notification.getKind() + " " + notification.getValue(), TAG);
                     }
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -177,12 +179,12 @@ public class UtilityActivity extends APIBaseActivity {
                 Observable.range(1, 3).doOnCompleted(new Action0() {
                     @Override
                     public void call() {
-                        log("onCompleted");
+                        log("onCompleted", TAG);
                     }
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -193,17 +195,17 @@ public class UtilityActivity extends APIBaseActivity {
                 Observable.just(1, "3").cast(Integer.class).doOnError(new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        log("doOnError:" + throwable.getMessage());
+                        log("doOnError:" + throwable.getMessage(), TAG);
                     }
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        log(throwable);
+                        log(throwable, TAG);
                     }
                 });
             }
@@ -214,12 +216,12 @@ public class UtilityActivity extends APIBaseActivity {
                 Observable.just(1, 2).doOnTerminate(new Action0() {
                     @Override
                     public void call() {
-                        log("OnTerminate");
+                        log("OnTerminate", TAG);
                     }
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -230,12 +232,12 @@ public class UtilityActivity extends APIBaseActivity {
                 Observable.just(1, 2).doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        log("OnSubscribe");
+                        log("OnSubscribe", TAG);
                     }
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -246,12 +248,12 @@ public class UtilityActivity extends APIBaseActivity {
                 Subscription subscription = Observable.just(1, 2).doOnUnsubscribe(new Action0() {
                     @Override
                     public void call() {
-                        log("OnUnSubscribe");
+                        log("OnUnSubscribe", TAG);
                     }
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
                 subscription.unsubscribe();
@@ -263,12 +265,12 @@ public class UtilityActivity extends APIBaseActivity {
                 Observable.just(1, 2).finallyDo(new Action0() {
                     @Override
                     public void call() {
-                        log("finallyDo");
+                        log("finallyDo", TAG);
                     }
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -279,7 +281,7 @@ public class UtilityActivity extends APIBaseActivity {
                 Observable.just(1, 2).delay(2, TimeUnit.SECONDS).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -292,7 +294,7 @@ public class UtilityActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer);
+                                log(integer, TAG);
                             }
                         });
             }
@@ -304,7 +306,7 @@ public class UtilityActivity extends APIBaseActivity {
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
                         subscriber.onNext(1);
-                        sleep(1000);
+                        sleep(1000, TAG);
                         subscriber.onNext(2);
                         subscriber.onCompleted();
                     }
@@ -315,7 +317,7 @@ public class UtilityActivity extends APIBaseActivity {
                             @Override
                             public void call(TimeInterval<Integer> integerTimeInterval) {
                                 log("" + integerTimeInterval.getValue() + " " +
-                                        integerTimeInterval.getIntervalInMilliseconds());
+                                        integerTimeInterval.getIntervalInMilliseconds(), TAG);
                             }
                         });
             }
@@ -354,12 +356,12 @@ public class UtilityActivity extends APIBaseActivity {
                 }).subscribe(new Action1<String>() {
                     @Override
                     public void call(String exist) {
-                        log(exist);
+                        log(exist, TAG);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        log(throwable);
+                        log(throwable, TAG);
                     }
                 });
             }
@@ -370,7 +372,7 @@ public class UtilityActivity extends APIBaseActivity {
                 Observable.just(1).single().subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -381,7 +383,7 @@ public class UtilityActivity extends APIBaseActivity {
                 Observable.<Integer>empty().singleOrDefault(10).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }

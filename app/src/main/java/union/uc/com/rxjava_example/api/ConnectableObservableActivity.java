@@ -13,6 +13,7 @@ import union.uc.com.rxjava_example.contants.Constants;
  * Created by wangli on 4/12/16.
  */
 public class ConnectableObservableActivity extends APIBaseActivity {
+    private static final String TAG = "ConnectableObservableAc";
 
     @Override
     protected void onRegisterAction(ActionRegistery registery) {
@@ -24,7 +25,7 @@ public class ConnectableObservableActivity extends APIBaseActivity {
                     public void call(Subscriber<? super Integer> subscriber) {
                         for (int i = 0; i < 5; ++i) {
                             subscriber.onNext(i);
-                            sleep(500);
+                            sleep(500, TAG);
                         }
                         subscriber.onCompleted();
                     }
@@ -32,26 +33,26 @@ public class ConnectableObservableActivity extends APIBaseActivity {
                 o.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("s1:" + integer);
+                        log("s1:" + integer, TAG);
                     }
                 });
-                sleep(1000);
+                sleep(1000, TAG);
                 ConnectableObservable<Integer> co = o.publish();
                 co.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("s2:" + integer);
+                        log("s2:" + integer, TAG);
                     }
                 });
 
-                log("begin connect");
+                log("begin connect", TAG);
                 co.connect();
             }
         });
         registery.add(Constants.ConnectableObservable.publish, new Runnable() {
             @Override
             public void run() {
-                log("showed in connect!");
+                log("showed in connect!", TAG);
             }
         });
         registery.add(Constants.ConnectableObservable.replay, new Runnable() {
@@ -62,7 +63,7 @@ public class ConnectableObservableActivity extends APIBaseActivity {
                     public void call(Subscriber<? super Integer> subscriber) {
                         for (int i = 0; i < 5; ++i) {
                             subscriber.onNext(i);
-                            sleep(500);
+                            sleep(500, TAG);
                         }
                         subscriber.onCompleted();
                     }
@@ -70,19 +71,19 @@ public class ConnectableObservableActivity extends APIBaseActivity {
                 o.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("s1:" + integer);
+                        log("s1:" + integer, TAG);
                     }
                 });
-                sleep(1000);
+                sleep(1000, TAG);
                 ConnectableObservable<Integer> co = o.publish();
                 co.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("s2:" + integer);
+                        log("s2:" + integer, TAG);
                     }
                 });
 
-                log("begin connect");
+                log("begin connect", TAG);
                 co.connect();
             }
         });
@@ -95,7 +96,7 @@ public class ConnectableObservableActivity extends APIBaseActivity {
                             public void call(Subscriber<? super Integer> subscriber) {
                                 for (int i = 0; i < 5; ++i) {
                                     subscriber.onNext(i);
-                                    sleep(500);
+                                    sleep(500, TAG);
                                 }
                                 subscriber.onCompleted();
                             }
@@ -104,31 +105,31 @@ public class ConnectableObservableActivity extends APIBaseActivity {
                 Subscription s1 = co.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("s1:" + integer);
+                        log("s1:" + integer, TAG);
                     }
                 });
                 Subscription s2 = co.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("s2:" + integer);
+                        log("s2:" + integer, TAG);
                     }
                 });
-                sleep(1000);
-                log("begin refcount!");
+                sleep(1000, TAG);
+                log("begin refcount!", TAG);
                 Observable<Integer> o = co.refCount();
                 o.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("obs:" + integer);
+                        log("obs:" + integer, TAG);
                     }
                 });
 
-                sleep(1000);
-                log("begin connect!");
+                sleep(1000, TAG);
+                log("begin connect!", TAG);
                 co.connect();
                 s1.unsubscribe();
                 s2.unsubscribe();
-                log("both disconnected!");
+                log("both disconnected!", TAG);
             }
         });
     }

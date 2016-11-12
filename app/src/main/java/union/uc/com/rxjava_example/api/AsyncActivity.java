@@ -20,6 +20,7 @@ import union.uc.com.rxjava_example.contants.Constants;
  * Created by wangli on 4/12/16.
  */
 public class AsyncActivity extends APIBaseActivity {
+    private static final String TAG = "AsyncActivity";
 
     @Override
     protected void onRegisterAction(ActionRegistery registery) {
@@ -29,13 +30,13 @@ public class AsyncActivity extends APIBaseActivity {
                 Async.start(new Func0<Integer>() {
                     @Override
                     public Integer call() {
-                        log("action run on " + Thread.currentThread().getName());
+                        log("action run on " + Thread.currentThread().getName(), TAG);
                         return 3;
                     }
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -46,21 +47,21 @@ public class AsyncActivity extends APIBaseActivity {
                 Async.<Integer>toAsync(new Action0() {
                     @Override
                     public void call() {
-                        log("action run on " + Thread.currentThread().getName());
-                        log("Action0.call ...on subscribe");
+                        log("action run on " + Thread.currentThread().getName(), TAG);
+                        log("Action0.call ...on subscribe", TAG);
                     }
                 }).call();
-                logLineSeperator();
+                logLineSeperator(TAG);
                 Async.<Integer>toAsync(new Action0() {
                     @Override
                     public void call() {
-                        log("action run on " + Thread.currentThread().getName());
-                        log("Action0.call");
+                        log("action run on " + Thread.currentThread().getName(), TAG);
+                        log("Action0.call", TAG);
                     }
                 }).call().subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        log("Action1.call");
+                        log("Action1.call", TAG);
                     }
                 });
             }
@@ -81,7 +82,7 @@ public class AsyncActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -102,7 +103,7 @@ public class AsyncActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -113,15 +114,15 @@ public class AsyncActivity extends APIBaseActivity {
                 Future<Void> f = Async.forEachFuture(Observable.just(1, 2, 3), new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        log(throwable);
+                        log(throwable, TAG);
                     }
                 });
-                log("task done:" + f.isDone());
+                log("task done:" + f.isDone(), TAG);
             }
         });
         registery.add(Constants.Async.fromAction, new Runnable() {
@@ -130,13 +131,13 @@ public class AsyncActivity extends APIBaseActivity {
                 Async.fromAction(new Action0() {
                     @Override
                     public void call() {
-                        log("action run on " + Thread.currentThread().getName());
-                        log("Action0.call");
+                        log("action run on " + Thread.currentThread().getName(), TAG);
+                        log("Action0.call", TAG);
                     }
                 }, 3).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -147,13 +148,13 @@ public class AsyncActivity extends APIBaseActivity {
                 Async.fromCallable(new Callable<Integer>() {
                     @Override
                     public Integer call() throws Exception {
-                        log("action run on " + Thread.currentThread().getName());
+                        log("action run on " + Thread.currentThread().getName(), TAG);
                         return 3;
                     }
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -164,12 +165,12 @@ public class AsyncActivity extends APIBaseActivity {
                 Async.fromRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        log("Runnable.run on " + Thread.currentThread().getName());
+                        log("Runnable.run on " + Thread.currentThread().getName(), TAG);
                     }
                 }, 3).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -180,7 +181,7 @@ public class AsyncActivity extends APIBaseActivity {
                 Async.runAsync(Schedulers.io(), new Action2<Observer<? super Integer>, Subscription>() {
                     @Override
                     public void call(Observer<? super Integer> observer, Subscription subscription) {
-                        log("Action2 run on " + Thread.currentThread().getName());
+                        log("Action2 run on " + Thread.currentThread().getName(), TAG);
                         observer.onNext(1);
                         observer.onNext(2);
                         observer.onCompleted();
@@ -188,7 +189,7 @@ public class AsyncActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }

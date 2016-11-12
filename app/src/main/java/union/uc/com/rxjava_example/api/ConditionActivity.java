@@ -19,6 +19,7 @@ import union.uc.com.rxjava_example.contants.Constants;
  * Created by wangli on 4/12/16.
  */
 public class ConditionActivity extends APIBaseActivity {
+    private static final String TAG = "ConditionActivity";
 
     @Override
     protected void onRegisterAction(ActionRegistery registery) {
@@ -28,7 +29,7 @@ public class ConditionActivity extends APIBaseActivity {
                 Observable.amb(Observable.create(new Observable.OnSubscribe<Integer>() {
                             @Override
                             public void call(Subscriber<? super Integer> subscriber) {
-                                sleep(1000);
+                                sleep(1000, TAG);
                                 subscriber.onNext(1);
                                 subscriber.onNext(11);
                                 subscriber.onCompleted();
@@ -37,7 +38,7 @@ public class ConditionActivity extends APIBaseActivity {
                         Observable.create(new Observable.OnSubscribe<Integer>() {
                             @Override
                             public void call(Subscriber<? super Integer> subscriber) {
-                                sleep(500);
+                                sleep(500, TAG);
                                 subscriber.onNext(2);
                                 subscriber.onNext(22);
                                 subscriber.onCompleted();
@@ -46,7 +47,7 @@ public class ConditionActivity extends APIBaseActivity {
                         Observable.create(new Observable.OnSubscribe<Integer>() {
                             @Override
                             public void call(Subscriber<? super Integer> subscriber) {
-                                sleep(300);
+                                sleep(300, TAG);
                                 subscriber.onNext(3);
                                 subscriber.onNext(33);
                                 subscriber.onCompleted();
@@ -54,7 +55,7 @@ public class ConditionActivity extends APIBaseActivity {
                         }).subscribeOn(Schedulers.newThread())).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -65,7 +66,7 @@ public class ConditionActivity extends APIBaseActivity {
                 Observable.<Integer>empty().defaultIfEmpty(3).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -84,7 +85,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -103,7 +104,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }, Observable.just(1, 2, 3)).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -115,7 +116,7 @@ public class ConditionActivity extends APIBaseActivity {
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
                         for (int i = 0; i < 10; ++i) {
-                            sleep(200);
+                            sleep(200, TAG);
                             subscriber.onNext(i);
                         }
                         subscriber.onCompleted();
@@ -126,7 +127,7 @@ public class ConditionActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer);
+                                log(integer, TAG);
                             }
                         });
             }
@@ -142,7 +143,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -167,7 +168,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }, map).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -183,7 +184,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -199,7 +200,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -207,7 +208,7 @@ public class ConditionActivity extends APIBaseActivity {
         registery.add(Constants.Condition.takeWhileWithIndex, new Runnable() {
             @Override
             public void run() {
-                logNotImplemented();
+                logNotImplemented(TAG);
             }
         });
         registery.add(Constants.Condition.WhileDo, new Runnable() {
@@ -223,7 +224,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -239,7 +240,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        log(aBoolean);
+                        log(aBoolean, TAG);
                     }
                 });
             }
@@ -250,7 +251,7 @@ public class ConditionActivity extends APIBaseActivity {
                 Observable.range(1, 10).contains(3).subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        log(aBoolean);
+                        log(aBoolean, TAG);
                     }
                 });
             }
@@ -266,7 +267,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        log(aBoolean);
+                        log(aBoolean, TAG);
                     }
                 });
             }
@@ -277,7 +278,7 @@ public class ConditionActivity extends APIBaseActivity {
                 Observable.empty().isEmpty().subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        log(aBoolean);
+                        log(aBoolean, TAG);
                     }
                 });
             }
@@ -295,7 +296,7 @@ public class ConditionActivity extends APIBaseActivity {
                         }).subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        log(aBoolean);
+                        log(aBoolean, TAG);
                     }
                 });
             }

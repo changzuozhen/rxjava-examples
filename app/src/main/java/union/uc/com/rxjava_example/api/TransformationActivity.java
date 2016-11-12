@@ -17,6 +17,7 @@ import union.uc.com.rxjava_example.contants.Constants;
  * Created by wangli on 4/12/16.
  */
 public class TransformationActivity extends APIBaseActivity {
+    private static final String TAG = "TransformationActivity";
 
     @Override
     protected void onRegisterAction(ActionRegistery registery) {
@@ -31,7 +32,7 @@ public class TransformationActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -53,7 +54,7 @@ public class TransformationActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -69,7 +70,7 @@ public class TransformationActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -85,7 +86,7 @@ public class TransformationActivity extends APIBaseActivity {
                 }).subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        log(s);
+                        log(s, TAG);
                     }
                 });
             }
@@ -98,7 +99,7 @@ public class TransformationActivity extends APIBaseActivity {
                     public void call(Subscriber<? super Integer> subscriber) {
                         for (int i = 0; i < 3; ++i) {
                             subscriber.onNext(i);
-                            sleep(500);
+                            sleep(500, TAG);
                         }
                         subscriber.onCompleted();
                     }
@@ -109,7 +110,7 @@ public class TransformationActivity extends APIBaseActivity {
                             @Override
                             public void call(Subscriber<? super Integer> subscriber) {
                                 subscriber.onNext(integer);
-                                sleep(500);
+                                sleep(500, TAG);
                                 subscriber.onNext(integer);
                                 subscriber.onCompleted();
                             }
@@ -118,7 +119,7 @@ public class TransformationActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer s) {
-                        log(s);
+                        log(s, TAG);
                     }
                 });
             }
@@ -134,7 +135,7 @@ public class TransformationActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -150,11 +151,11 @@ public class TransformationActivity extends APIBaseActivity {
                 }).subscribe(new Action1<GroupedObservable<String, Integer>>() {
                     @Override
                     public void call(final GroupedObservable<String, Integer> stringIntegerGroupedObservable) {
-                        log("group ok:" + stringIntegerGroupedObservable.getKey());
+                        log("group ok:" + stringIntegerGroupedObservable.getKey(), TAG);
                         stringIntegerGroupedObservable.subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer + " of group " + stringIntegerGroupedObservable.getKey());
+                                log(integer + " of group " + stringIntegerGroupedObservable.getKey(), TAG);
                             }
                         });
                     }
@@ -171,7 +172,7 @@ public class TransformationActivity extends APIBaseActivity {
                         for (Integer i : integers) {
                             s += i;
                         }
-                        log(s);
+                        log(s, TAG);
                     }
                 });
             }
@@ -185,7 +186,7 @@ public class TransformationActivity extends APIBaseActivity {
                         integerObservable.subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer + " of window " + integerObservable);
+                                log(integer + " of window " + integerObservable, TAG);
                             }
                         });
                     }
@@ -199,7 +200,7 @@ public class TransformationActivity extends APIBaseActivity {
                         cast(Integer.class).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }

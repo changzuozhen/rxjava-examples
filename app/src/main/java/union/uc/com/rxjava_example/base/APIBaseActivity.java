@@ -3,6 +3,7 @@ package union.uc.com.rxjava_example.base;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -33,6 +34,51 @@ public abstract class APIBaseActivity extends Activity {
     private LinearLayout mTop;
     private ActionAdapter mActionAdapter = new ActionAdapter();
     private SubscriptionList mLastSubscriptionList = new SubscriptionList();
+
+    public static void printStackTrace(String tag) {
+        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+        for (int i = 1; i < stackTraceElements.length; i++) {
+            Log.println(Log.INFO, tag, stackTraceElements[i].toString());
+        }
+    }
+
+    /**
+     * 制作打log位置的文件名与文件行号详细信息
+     *
+     * @param log
+     * @param stackTraceElements
+     * @return
+     */
+    private static String build(String log, StackTraceElement... stackTraceElements) {
+        StringBuilder buf = new StringBuilder();
+
+        buf.append("[").append(Thread.currentThread().getId()).append("]");
+        StackTraceElement stackTraceElement;
+        for (int i = 0; i < stackTraceElements.length; i++) {
+            stackTraceElement = stackTraceElements[i];
+            if (stackTraceElements.length > 1) buf.append("\ni:" + i + "  ");
+            if (stackTraceElement.isNativeMethod()) {
+                buf.append("(Native Method)");
+            } else {
+                String fName = stackTraceElement.getFileName();
+
+                if (fName == null) {
+                    buf.append("(Unknown Source)");
+                } else {
+                    int lineNum = stackTraceElement.getLineNumber();
+                    buf.append('(');
+                    buf.append(fName);
+                    if (lineNum >= 0) {
+                        buf.append(':');
+                        buf.append(lineNum);
+                    }
+                    buf.append("):");
+                }
+            }
+            buf.append(log);
+        }
+        return buf.toString();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,27 +123,31 @@ public abstract class APIBaseActivity extends Activity {
         setContentView(container);
     }
 
-    protected void logNotImplemented() {
-        log("RxJava not implement!");
+    protected void logNotImplemented(String tag) {
+        log("RxJava not implement!", tag, 3);
     }
 
-    protected void logUseObservable() {
-        log("Use Observable!");
+    protected void logUseObservable(String tag) {
+        log("Use Observable!", tag, 3);
     }
 
-    protected <T> void log(T value) {
-        log("" + value);
+    protected <T> void log(T value, String tag) {
+        log("" + value, tag, 3);
     }
 
-    protected void log(Throwable throwable) {
-        log("error:" + throwable.getMessage());
+    protected void log(Throwable throwable, String tag) {
+        log("error:" + throwable.getMessage(), tag, 3);
     }
 
-    protected void logLineSeperator() {
-        log("------------------");
+    protected void logLineSeperator(String tag) {
+        log("------------------", tag, 3);
     }
 
-    protected void log(final String tipLine) {
+    protected void log(final String tipLine, String tag) {
+        log(tipLine, tag, 3);
+    }
+
+    protected void log(final String tipLine, String tag, int deepth) {
         //ensure log on ui thread
         runOnUiThread(new Runnable() {
             @Override
@@ -105,6 +155,10 @@ public abstract class APIBaseActivity extends Activity {
                 mLog.setText(mLog.getText().toString() + "\r\n" + tipLine);
             }
         });
+        StackTraceElement ste = new Throwable().getStackTrace()[deepth];
+//        StackTraceElement[] ste = new Throwable().getStackTrace();
+        String log = build(tipLine, ste);
+        Log.d(tag, log);
     }
 
     protected void clearLog() {
@@ -117,11 +171,11 @@ public abstract class APIBaseActivity extends Activity {
         });
     }
 
-    protected void sleep(int millsecond) {
+    protected void sleep(int millsecond, String tag) {
         try {
             Thread.sleep(millsecond);
         } catch (Exception e) {
-            log(e.getMessage());
+            log(e.getMessage(), tag, 3);
         }
     }
 

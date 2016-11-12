@@ -17,6 +17,8 @@ import union.uc.com.rxjava_example.contants.Constants;
  */
 public class BlockingObservableActivity extends APIBaseActivity {
 
+    private static final String TAG = "BlockingObservableActiv";
+
     @Override
     protected void onRegisterAction(ActionRegistery registery) {
         registery.add(Constants.BlockingObservable.forEach, new Runnable() {
@@ -32,7 +34,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                 }).subscribeOn(Schedulers.newThread()).toBlocking().forEach(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -48,7 +50,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().first();
-                log(i);
+                log(i, TAG);
             }
         });
         registery.add(Constants.BlockingObservable.firstOrDefault, new Runnable() {
@@ -60,7 +62,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().firstOrDefault(5000);
-                log(i);
+                log(i, TAG);
             }
         });
         registery.add(Constants.BlockingObservable.last, new Runnable() {
@@ -74,7 +76,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().last();
-                log(i);
+                log(i, TAG);
             }
         });
         registery.add(Constants.BlockingObservable.lastOrDefault, new Runnable() {
@@ -86,7 +88,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().lastOrDefault(5000);
-                log(i);
+                log(i, TAG);
             }
         });
         registery.add(Constants.BlockingObservable.mostRecent, new Runnable() {
@@ -101,7 +103,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().mostRecent(5000).iterator();
                 while (itr.hasNext()) {
-                    log(itr.next());
+                    log(itr.next(), TAG);
                 }
             }
         });
@@ -117,7 +119,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().next().iterator();
                 while (itr.hasNext()) {
-                    log(itr.next());
+                    log(itr.next(), TAG);
                 }
             }
         });
@@ -133,7 +135,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().latest().iterator();
                 while (itr.hasNext()) {
-                    log(itr.next());
+                    log(itr.next(), TAG);
                 }
             }
         });
@@ -147,7 +149,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().single();
-                log(i);
+                log(i, TAG);
             }
         });
         registery.add(Constants.BlockingObservable.singleOrDefault, new Runnable() {
@@ -159,7 +161,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().singleOrDefault(3000);
-                log(i);
+                log(i, TAG);
             }
         });
         registery.add(Constants.BlockingObservable.toFuture, new Runnable() {
@@ -173,13 +175,13 @@ public class BlockingObservableActivity extends APIBaseActivity {
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().toFuture();
                 try {
-                    log(future.get());
+                    log(future.get(), TAG);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                    log(e);
+                    log(e, TAG);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
-                    log(e);
+                    log(e, TAG);
                 }
             }
         });
@@ -195,7 +197,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().toIterable().iterator();
                 while (itr.hasNext()) {
-                    log(itr.next());
+                    log(itr.next(), TAG);
                 }
             }
         });
@@ -211,7 +213,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().getIterator();
                 while (itr.hasNext()) {
-                    log(itr.next());
+                    log(itr.next(), TAG);
                 }
             }
         });

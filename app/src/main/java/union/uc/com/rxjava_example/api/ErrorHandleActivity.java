@@ -12,6 +12,7 @@ import union.uc.com.rxjava_example.contants.Constants;
  * Created by wangli on 4/12/16.
  */
 public class ErrorHandleActivity extends APIBaseActivity {
+    private static final String TAG = "ErrorHandleActivity";
 
     @Override
     protected void onRegisterAction(ActionRegistery registery) {
@@ -24,12 +25,12 @@ public class ErrorHandleActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer);
+                                log(integer, TAG);
                             }
                         }, new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                log(throwable);
+                                log(throwable, TAG);
                             }
                         });
             }
@@ -48,12 +49,12 @@ public class ErrorHandleActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer);
+                                log(integer, TAG);
                             }
                         }, new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                log(throwable);
+                                log(throwable, TAG);
                             }
                         });
             }
@@ -67,12 +68,12 @@ public class ErrorHandleActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer);
+                                log(integer, TAG);
                             }
                         }, new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                log(throwable);
+                                log(throwable, TAG);
                             }
                         });
             }
@@ -83,12 +84,12 @@ public class ErrorHandleActivity extends APIBaseActivity {
                 Observable.just(1, "abc", 2).cast(Integer.class).retry(2).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        log(throwable);
+                        log(throwable, TAG);
                     }
                 });
             }
@@ -104,7 +105,7 @@ public class ErrorHandleActivity extends APIBaseActivity {
                                 observable.subscribe(new Action1<Throwable>() {
                                     @Override
                                     public void call(Throwable throwable) {
-                                        log("error inner:" + throwable.getMessage());
+                                        log("error inner:" + throwable.getMessage(), TAG);
                                     }
                                 });
                                 return Observable.timer(1, TimeUnit.SECONDS);
@@ -113,12 +114,12 @@ public class ErrorHandleActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer);
+                                log(integer, TAG);
                             }
                         }, new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                log(throwable);
+                                log(throwable, TAG);
                             }
                         });
             }

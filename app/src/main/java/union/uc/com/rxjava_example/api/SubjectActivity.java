@@ -15,6 +15,7 @@ import union.uc.com.rxjava_example.contants.Constants;
  * Created by wangli on 4/12/16.
  */
 public class SubjectActivity extends APIBaseActivity {
+    private static final String TAG = "SubjectActivity";
 
     @Override
     protected void onRegisterAction(ActionRegistery registery) {
@@ -25,7 +26,7 @@ public class SubjectActivity extends APIBaseActivity {
                 s.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("" + integer);
+                        log("" + integer, TAG);
                     }
                 });
                 s.onNext(0);
@@ -43,7 +44,7 @@ public class SubjectActivity extends APIBaseActivity {
                 s.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("" + integer);
+                        log("" + integer, TAG);
                     }
                 });
                 s.onNext(3);
@@ -56,7 +57,7 @@ public class SubjectActivity extends APIBaseActivity {
                 s.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("" + integer);
+                        log("" + integer, TAG);
                     }
                 });
                 s.onNext(1);
@@ -70,7 +71,7 @@ public class SubjectActivity extends APIBaseActivity {
                 subject.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("" + integer);
+                        log("" + integer, TAG);
                     }
                 });
                 subject.onNext(2);
@@ -86,7 +87,7 @@ public class SubjectActivity extends APIBaseActivity {
                 subject.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("Subscriber1:" + integer);
+                        log("Subscriber1:" + integer, TAG);
                     }
                 });
                 subject.onNext(2);
@@ -94,7 +95,7 @@ public class SubjectActivity extends APIBaseActivity {
                 subject.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("Subscriber2:" + integer);
+                        log("Subscriber2:" + integer, TAG);
                     }
                 });
                 subject.onNext(4);
@@ -114,12 +115,12 @@ public class SubjectActivity extends APIBaseActivity {
                     subject.subscribe(new Action1<Integer>() {
                         @Override
                         public void call(Integer integer) {
-                            log("" + integer);
+                            log("" + integer, TAG);
                         }
                     });
                     subject.onNext(4);
                 } catch (InterruptedException e) {
-                    log("error:" + e.getMessage());
+                    log("error:" + e.getMessage(), TAG);
                 }
             }
         });

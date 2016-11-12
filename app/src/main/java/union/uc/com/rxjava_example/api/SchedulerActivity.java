@@ -11,6 +11,7 @@ import union.uc.com.rxjava_example.contants.Constants;
  * Created by wangli on 4/12/16.
  */
 public class SchedulerActivity extends APIBaseActivity {
+    private static final String TAG = "SchedulerActivity";
 
     @Override
     protected void onRegisterAction(ActionRegistery registery) {
@@ -20,7 +21,7 @@ public class SchedulerActivity extends APIBaseActivity {
                 Observable.just("a", "b").observeOn(Schedulers.io()).subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        log(s + " on " + Thread.currentThread().getName());
+                        log(s + " on " + Thread.currentThread().getName(), TAG);
                     }
                 });
             }
@@ -33,7 +34,7 @@ public class SchedulerActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s + " on " + Thread.currentThread().getName());
+                                log(s + " on " + Thread.currentThread().getName(), TAG);
                             }
                         });
             }
@@ -46,7 +47,7 @@ public class SchedulerActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s + " on " + Thread.currentThread().getName());
+                                log(s + " on " + Thread.currentThread().getName(), TAG);
                             }
                         });
             }
@@ -59,10 +60,10 @@ public class SchedulerActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s + " on " + Thread.currentThread().getName());
+                                log(s + " on " + Thread.currentThread().getName(), TAG);
                             }
                         });
-                log("i'm on thread " + Thread.currentThread().getName());
+                log("i'm on thread " + Thread.currentThread().getName(), TAG);
             }
         });
         registery.add(Constants.Scheduler.immediate, new Runnable() {
@@ -73,10 +74,10 @@ public class SchedulerActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s + " on " + Thread.currentThread().getName());
+                                log(s + " on " + Thread.currentThread().getName(), TAG);
                             }
                         });
-                log("i'm on thread " + Thread.currentThread().getName());
+                log("i'm on thread " + Thread.currentThread().getName(), TAG);
             }
         });
         registery.add(Constants.Scheduler.self_define, new Runnable() {
@@ -87,7 +88,7 @@ public class SchedulerActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s + " on " + Thread.currentThread().getName());
+                                log(s + " on " + Thread.currentThread().getName(), TAG);
                             }
                         });
             }

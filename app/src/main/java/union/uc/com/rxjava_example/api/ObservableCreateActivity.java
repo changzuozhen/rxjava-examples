@@ -19,6 +19,7 @@ import union.uc.com.rxjava_example.contants.Constants;
  * Created by wangli on 4/12/16.
  */
 public class ObservableCreateActivity extends APIBaseActivity {
+    private static final String TAG = "ObservableCreateActivity";
 
     @Override
     protected void onRegisterAction(ActionRegistery registery) {
@@ -28,7 +29,7 @@ public class ObservableCreateActivity extends APIBaseActivity {
                 Observable.just(1, 2, 3).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer);
+                        log(integer, TAG);
                     }
                 });
             }
@@ -44,7 +45,7 @@ public class ObservableCreateActivity extends APIBaseActivity {
                 })).subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        log(s);
+                        log(s, TAG);
                     }
                 });
             }
@@ -56,7 +57,7 @@ public class ObservableCreateActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s);
+                                log(s, TAG);
                             }
                         });
             }
@@ -64,7 +65,7 @@ public class ObservableCreateActivity extends APIBaseActivity {
         registery.add(Constants.ObservableCreate.repeat, new Runnable() {
                     @Override
                     public void run() {
-                        log("RxJava not implemented!");
+                        log("RxJava not implemented!", TAG);
                     }
                 }
 
@@ -72,7 +73,7 @@ public class ObservableCreateActivity extends APIBaseActivity {
         registery.add(Constants.ObservableCreate.repeatWhen, new Runnable() {
                     @Override
                     public void run() {
-                        log("RxJava not implemented!");
+                        log("RxJava not implemented!", TAG);
                     }
                 }
 
@@ -90,7 +91,7 @@ public class ObservableCreateActivity extends APIBaseActivity {
                         }).subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer);
+                                log(integer, TAG);
                             }
                         });
                     }
@@ -110,18 +111,18 @@ public class ObservableCreateActivity extends APIBaseActivity {
                         now.subscribe(new Action1<Long>() {
                             @Override
                             public void call(Long aLong) {
-                                log(aLong);
+                                log(aLong, TAG);
                             }
                         });
                         try {
                             Thread.sleep(1000);
                         } catch (Exception e) {
-                            log("exception:" + e.getMessage());
+                            log("exception:" + e.getMessage(), TAG);
                         }
                         now.subscribe(new Action1<Long>() {
                             @Override
                             public void call(Long aLong) {
-                                log(aLong);
+                                log(aLong, TAG);
                             }
                         });
                     }
@@ -134,7 +135,7 @@ public class ObservableCreateActivity extends APIBaseActivity {
                         Observable.range(1, 10).subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer);
+                                log(integer, TAG);
                             }
                         });
                     }
@@ -148,7 +149,7 @@ public class ObservableCreateActivity extends APIBaseActivity {
                                 Observable.interval(1, TimeUnit.SECONDS).subscribe(new Action1<Long>() {
                                     @Override
                                     public void call(Long aLong) {
-                                        log(aLong);
+                                        log(aLong, TAG);
                                     }
                                 });
                         AsyncExecutor.SINGLETON.schedule(new Runnable() {
@@ -169,7 +170,7 @@ public class ObservableCreateActivity extends APIBaseActivity {
                         Observable.timer(1, TimeUnit.SECONDS).subscribe(new Action1<Long>() {
                             @Override
                             public void call(Long aLong) {
-                                log(aLong);
+                                log(aLong, TAG);
                             }
                         });
                     }
@@ -182,17 +183,17 @@ public class ObservableCreateActivity extends APIBaseActivity {
                         Observable.<String>empty().subscribe(new Observer<String>() {
                             @Override
                             public void onNext(String s) {
-                                log("onNext:" + s);
+                                log("onNext:" + s, TAG);
                             }
 
                             @Override
                             public void onCompleted() {
-                                log("onCompleted");
+                                log("onCompleted", TAG);
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                log("onError:" + e.getMessage());
+                                log("onError:" + e.getMessage(), TAG);
                             }
                         });
                     }
@@ -205,17 +206,17 @@ public class ObservableCreateActivity extends APIBaseActivity {
                         Observable.error(new Exception("abc")).subscribe(new Action1<Object>() {
                             @Override
                             public void call(Object o) {
-                                log("onNext");
+                                log("onNext", TAG);
                             }
                         }, new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                log("onError:" + throwable.getMessage());
+                                log("onError:" + throwable.getMessage(), TAG);
                             }
                         }, new Action0() {
                             @Override
                             public void call() {
-                                log("onComplete");
+                                log("onComplete", TAG);
                             }
                         });
                     }
@@ -229,7 +230,7 @@ public class ObservableCreateActivity extends APIBaseActivity {
                         Observable.<Void>never().subscribe(new Action1<Void>() {
                             @Override
                             public void call(Void aVoid) {
-                                log("it's impossible!");
+                                log("it's impossible!", TAG);
                             }
                         });
                     }
