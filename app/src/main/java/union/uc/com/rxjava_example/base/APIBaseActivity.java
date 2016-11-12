@@ -148,6 +148,11 @@ public abstract class APIBaseActivity extends Activity {
     }
 
     protected void log(String tag, int deepth, final String tipLine) {
+        StackTraceElement ste = new Throwable().getStackTrace()[deepth];
+//        StackTraceElement[] ste = new Throwable().getStackTrace();
+        String log = build(tipLine, ste);
+        Log.d(tag, log);
+
         //ensure log on ui thread
         runOnUiThread(new Runnable() {
             @Override
@@ -155,10 +160,6 @@ public abstract class APIBaseActivity extends Activity {
                 mLog.setText(mLog.getText().toString() + "\r\n" + tipLine);
             }
         });
-        StackTraceElement ste = new Throwable().getStackTrace()[deepth];
-//        StackTraceElement[] ste = new Throwable().getStackTrace();
-        String log = build(tipLine, ste);
-        Log.d(tag, log);
     }
 
     protected void clearLog() {
@@ -173,11 +174,10 @@ public abstract class APIBaseActivity extends Activity {
 
     protected void sleep(String tag, int millsecond) {
         try {
-            log(tag, 3, "---------sleep " + millsecond +
-                    "---------");
+            log(tag, 3, ("---------sleep---------" + millsecond));
             Thread.sleep(millsecond);
         } catch (Exception e) {
-            log(tag, 3, e.getMessage());
+            log(tag, 3, e.toString());
         }
     }
 

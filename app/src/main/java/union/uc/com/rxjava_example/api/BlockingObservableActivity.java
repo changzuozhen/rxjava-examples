@@ -8,6 +8,7 @@ import java.util.concurrent.Future;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import union.uc.com.rxjava_example.base.APIBaseActivity;
 import union.uc.com.rxjava_example.contants.Constants;
@@ -44,15 +45,32 @@ public class BlockingObservableActivity extends APIBaseActivity {
         registery.add(Constants.BlockingObservable.first, new Runnable() {
             @Override
             public void run() {
+                // 阻塞直到Observable发射了一个数据，然后返回第一项数据
                 Integer i = Observable.create(new Observable.OnSubscribe<Integer>() {
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
+                        sleep(TAG, 1000);
                         subscriber.onNext(1);
+                        sleep(TAG, 2000);
                         subscriber.onNext(2);
+                        sleep(TAG, 2100);
+                        subscriber.onNext(3);
+                        sleep(TAG, 2200);
                         subscriber.onCompleted();
                     }
-                }).subscribeOn(Schedulers.newThread()).toBlocking().first();
-                log(TAG, i);
+                })
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(Schedulers.io())
+                        .map(new Func1<Integer, Integer>() {
+                            @Override
+                            public Integer call(Integer integer) {
+                                log(TAG, "map:" + integer);
+                                return integer;
+                            }
+                        })
+                        .toBlocking()
+                        .first();
+                log(TAG, "first:" + i);
             }
         });
         registery.add(Constants.BlockingObservable.firstOrDefault, new Runnable() {
