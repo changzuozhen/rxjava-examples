@@ -30,7 +30,7 @@ public class CustomeOperatorActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer, TAG);
+                                log(TAG, integer);
                             }
                         });
             }
@@ -49,19 +49,19 @@ public class CustomeOperatorActivity extends APIBaseActivity {
             return new Subscriber<T>() {
                 @Override
                 public void onCompleted() {
-                    log("onComplete", TAG);
+                    log(TAG, "onComplete");
                     subscriber.onCompleted();
                 }
 
                 @Override
                 public void onError(Throwable e) {
-                    log("onError:" + e, TAG);
+                    log(TAG, "onError:" + e);
                     subscriber.onError(e);
                 }
 
                 @Override
                 public void onNext(T t) {
-                    log("onNext:" + t, TAG);
+                    log(TAG, "onNext:" + t);
                     try {
                         R r = mTransformer.call(t);
                         subscriber.onNext(r);

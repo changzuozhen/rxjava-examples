@@ -25,12 +25,12 @@ public class ErrorHandleActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer, TAG);
+                                log(TAG, integer);
                             }
                         }, new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                log(throwable, TAG);
+                                log(TAG, throwable);
                             }
                         });
             }
@@ -49,12 +49,12 @@ public class ErrorHandleActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer, TAG);
+                                log(TAG, integer);
                             }
                         }, new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                log(throwable, TAG);
+                                log(TAG, throwable);
                             }
                         });
             }
@@ -68,12 +68,12 @@ public class ErrorHandleActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer, TAG);
+                                log(TAG, integer);
                             }
                         }, new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                log(throwable, TAG);
+                                log(TAG, throwable);
                             }
                         });
             }
@@ -84,12 +84,12 @@ public class ErrorHandleActivity extends APIBaseActivity {
                 Observable.just(1, "abc", 2).cast(Integer.class).retry(2).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        log(throwable, TAG);
+                        log(TAG, throwable);
                     }
                 });
             }
@@ -105,7 +105,7 @@ public class ErrorHandleActivity extends APIBaseActivity {
                                 observable.subscribe(new Action1<Throwable>() {
                                     @Override
                                     public void call(Throwable throwable) {
-                                        log("error inner:" + throwable.getMessage(), TAG);
+                                        log(TAG, "error inner:" + throwable.getMessage());
                                     }
                                 });
                                 return Observable.timer(1, TimeUnit.SECONDS);
@@ -114,12 +114,12 @@ public class ErrorHandleActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer, TAG);
+                                log(TAG, integer);
                             }
                         }, new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                log(throwable, TAG);
+                                log(TAG, throwable);
                             }
                         });
             }

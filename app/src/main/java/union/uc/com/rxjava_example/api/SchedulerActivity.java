@@ -21,7 +21,7 @@ public class SchedulerActivity extends APIBaseActivity {
                 Observable.just("a", "b").observeOn(Schedulers.io()).subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        log(s + " on " + Thread.currentThread().getName(), TAG);
+                        log(TAG, s + " on " + Thread.currentThread().getName());
                     }
                 });
             }
@@ -34,7 +34,7 @@ public class SchedulerActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s + " on " + Thread.currentThread().getName(), TAG);
+                                log(TAG, s + " on " + Thread.currentThread().getName());
                             }
                         });
             }
@@ -47,7 +47,7 @@ public class SchedulerActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s + " on " + Thread.currentThread().getName(), TAG);
+                                log(TAG, s + " on " + Thread.currentThread().getName());
                             }
                         });
             }
@@ -60,10 +60,10 @@ public class SchedulerActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s + " on " + Thread.currentThread().getName(), TAG);
+                                log(TAG, s + " on " + Thread.currentThread().getName());
                             }
                         });
-                log("i'm on thread " + Thread.currentThread().getName(), TAG);
+                log(TAG, "i'm on thread " + Thread.currentThread().getName());
             }
         });
         registery.add(Constants.Scheduler.immediate, new Runnable() {
@@ -74,10 +74,10 @@ public class SchedulerActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s + " on " + Thread.currentThread().getName(), TAG);
+                                log(TAG, s + " on " + Thread.currentThread().getName());
                             }
                         });
-                log("i'm on thread " + Thread.currentThread().getName(), TAG);
+                log(TAG, "i'm on thread " + Thread.currentThread().getName());
             }
         });
         registery.add(Constants.Scheduler.self_define, new Runnable() {
@@ -88,7 +88,7 @@ public class SchedulerActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s + " on " + Thread.currentThread().getName(), TAG);
+                                log(TAG, s + " on " + Thread.currentThread().getName());
                             }
                         });
             }

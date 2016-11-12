@@ -26,7 +26,7 @@ public class SubjectActivity extends APIBaseActivity {
                 s.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("" + integer, TAG);
+                        log(TAG, "" + integer);
                     }
                 });
                 s.onNext(0);
@@ -44,7 +44,7 @@ public class SubjectActivity extends APIBaseActivity {
                 s.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("" + integer, TAG);
+                        log(TAG, "" + integer);
                     }
                 });
                 s.onNext(3);
@@ -57,7 +57,7 @@ public class SubjectActivity extends APIBaseActivity {
                 s.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("" + integer, TAG);
+                        log(TAG, "" + integer);
                     }
                 });
                 s.onNext(1);
@@ -71,7 +71,7 @@ public class SubjectActivity extends APIBaseActivity {
                 subject.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("" + integer, TAG);
+                        log(TAG, "" + integer);
                     }
                 });
                 subject.onNext(2);
@@ -87,7 +87,7 @@ public class SubjectActivity extends APIBaseActivity {
                 subject.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("Subscriber1:" + integer, TAG);
+                        log(TAG, "Subscriber1:" + integer);
                     }
                 });
                 subject.onNext(2);
@@ -95,7 +95,7 @@ public class SubjectActivity extends APIBaseActivity {
                 subject.subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log("Subscriber2:" + integer, TAG);
+                        log(TAG, "Subscriber2:" + integer);
                     }
                 });
                 subject.onNext(4);
@@ -115,12 +115,12 @@ public class SubjectActivity extends APIBaseActivity {
                     subject.subscribe(new Action1<Integer>() {
                         @Override
                         public void call(Integer integer) {
-                            log("" + integer, TAG);
+                            log(TAG, "" + integer);
                         }
                     });
                     subject.onNext(4);
                 } catch (InterruptedException e) {
-                    log("error:" + e.getMessage(), TAG);
+                    log(TAG, "error:" + e.getMessage());
                 }
             }
         });

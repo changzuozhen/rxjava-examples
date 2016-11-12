@@ -32,7 +32,7 @@ public class TransformationActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -54,7 +54,7 @@ public class TransformationActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -70,7 +70,7 @@ public class TransformationActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -86,7 +86,7 @@ public class TransformationActivity extends APIBaseActivity {
                 }).subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        log(s, TAG);
+                        log(TAG, s);
                     }
                 });
             }
@@ -99,7 +99,7 @@ public class TransformationActivity extends APIBaseActivity {
                     public void call(Subscriber<? super Integer> subscriber) {
                         for (int i = 0; i < 3; ++i) {
                             subscriber.onNext(i);
-                            sleep(500, TAG);
+                            sleep(TAG, 500);
                         }
                         subscriber.onCompleted();
                     }
@@ -110,7 +110,7 @@ public class TransformationActivity extends APIBaseActivity {
                             @Override
                             public void call(Subscriber<? super Integer> subscriber) {
                                 subscriber.onNext(integer);
-                                sleep(500, TAG);
+                                sleep(TAG, 500);
                                 subscriber.onNext(integer);
                                 subscriber.onCompleted();
                             }
@@ -119,7 +119,7 @@ public class TransformationActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer s) {
-                        log(s, TAG);
+                        log(TAG, s);
                     }
                 });
             }
@@ -135,7 +135,7 @@ public class TransformationActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -151,11 +151,11 @@ public class TransformationActivity extends APIBaseActivity {
                 }).subscribe(new Action1<GroupedObservable<String, Integer>>() {
                     @Override
                     public void call(final GroupedObservable<String, Integer> stringIntegerGroupedObservable) {
-                        log("group ok:" + stringIntegerGroupedObservable.getKey(), TAG);
+                        log(TAG, "group ok:" + stringIntegerGroupedObservable.getKey());
                         stringIntegerGroupedObservable.subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer + " of group " + stringIntegerGroupedObservable.getKey(), TAG);
+                                log(TAG, integer + " of group " + stringIntegerGroupedObservable.getKey());
                             }
                         });
                     }
@@ -172,7 +172,7 @@ public class TransformationActivity extends APIBaseActivity {
                         for (Integer i : integers) {
                             s += i;
                         }
-                        log(s, TAG);
+                        log(TAG, s);
                     }
                 });
             }
@@ -186,7 +186,7 @@ public class TransformationActivity extends APIBaseActivity {
                         integerObservable.subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer + " of window " + integerObservable, TAG);
+                                log(TAG, integer + " of window " + integerObservable);
                             }
                         });
                     }
@@ -200,7 +200,7 @@ public class TransformationActivity extends APIBaseActivity {
                         cast(Integer.class).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }

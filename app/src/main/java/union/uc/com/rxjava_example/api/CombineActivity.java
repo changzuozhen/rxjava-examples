@@ -36,7 +36,7 @@ public class CombineActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer, TAG);
+                                log(TAG, integer);
                             }
                         });
             }
@@ -61,7 +61,7 @@ public class CombineActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s, TAG);
+                                log(TAG, s);
                             }
                         });
             }
@@ -83,7 +83,7 @@ public class CombineActivity extends APIBaseActivity {
                 JoinObservable.when(p).toObservable().subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        log(s, TAG);
+                        log(TAG, s);
                     }
                 });
             }
@@ -97,7 +97,7 @@ public class CombineActivity extends APIBaseActivity {
                             public void call(Subscriber<? super Integer> subscriber) {
                                 for (int i = 0; i < 10; ++i) {
                                     subscriber.onNext(i);
-                                    sleep(1000, TAG);
+                                    sleep(TAG, 1000);
                                 }
                             }
                         }).subscribeOn(Schedulers.newThread()),
@@ -107,7 +107,7 @@ public class CombineActivity extends APIBaseActivity {
                                 final String[] arr = new String[]{"a", "b", "c"};
                                 for (int i = 0; i < arr.length; ++i) {
                                     subscriber.onNext(arr[i]);
-                                    sleep(400, TAG);
+                                    sleep(TAG, 400);
                                 }
                             }
                         }).subscribeOn(Schedulers.newThread()),
@@ -119,7 +119,7 @@ public class CombineActivity extends APIBaseActivity {
                         }).subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        log(s, TAG);
+                        log(TAG, s);
                     }
                 });
             }
@@ -133,7 +133,7 @@ public class CombineActivity extends APIBaseActivity {
                             public void call(Subscriber<? super Integer> subscriber) {
                                 for (int i = 0; i < 10; ++i) {
                                     subscriber.onNext(i);
-                                    sleep(1000, TAG);
+                                    sleep(TAG, 1000);
                                 }
                             }
                         })
@@ -144,7 +144,7 @@ public class CombineActivity extends APIBaseActivity {
                                         final String[] arr = new String[]{"a", "b", "c"};
                                         for (int i = 0; i < arr.length; ++i) {
                                             subscriber.onNext(arr[i]);
-                                            sleep(400, TAG);
+                                            sleep(TAG, 400);
                                         }
                                     }
                                 })
@@ -167,7 +167,7 @@ public class CombineActivity extends APIBaseActivity {
                                 .subscribe(new Action1<String>() {
                                     @Override
                                     public void call(String s) {
-                                        log(s, TAG);
+                                        log(TAG, s);
                                     }
                                 });
                     }
@@ -184,7 +184,7 @@ public class CombineActivity extends APIBaseActivity {
                     public void call(Subscriber<? super Integer> subscriber) {
                         for (int i = 0; i < 10; ++i) {
                             subscriber.onNext(i);
-                            sleep(1000, TAG);
+                            sleep(TAG, 1000);
                         }
                     }
                 })
@@ -195,7 +195,7 @@ public class CombineActivity extends APIBaseActivity {
                                 final String[] arr = new String[]{"a", "b", "c"};
                                 for (int i = 0; i < arr.length; ++i) {
                                     subscriber.onNext(arr[i]);
-                                    sleep(400, TAG);
+                                    sleep(TAG, 400);
                                 }
                             }
                         }).subscribeOn(Schedulers.newThread()), new Func1<Integer, Observable<Long>>() {
@@ -226,7 +226,7 @@ public class CombineActivity extends APIBaseActivity {
                                 o.subscribe(new Action1<String>() {
                                     @Override
                                     public void call(String s) {
-                                        log(s, TAG);
+                                        log(TAG, s);
                                     }
                                 });
                             }
@@ -240,7 +240,7 @@ public class CombineActivity extends APIBaseActivity {
                                 .subscribe(new Action1<Integer>() {
                                     @Override
                                     public void call(Integer integer) {
-                                        log(integer, TAG);
+                                        log(TAG, integer);
                                     }
                                 });
                     }

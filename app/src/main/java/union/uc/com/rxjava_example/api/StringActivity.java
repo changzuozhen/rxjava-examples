@@ -24,7 +24,7 @@ public class StringActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s, TAG);
+                                log(TAG, s);
                             }
                         });
             }
@@ -36,7 +36,7 @@ public class StringActivity extends APIBaseActivity {
                         Charset.forName("UTF-8")).subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        log(s, TAG);
+                        log(TAG, s);
                     }
                 });
             }
@@ -47,7 +47,7 @@ public class StringActivity extends APIBaseActivity {
                 StringObservable.encode(Observable.just("abc"), "UTF-8").subscribe(new Action1<byte[]>() {
                     @Override
                     public void call(byte[] bytes) {
-                        log(bytes.length, TAG);
+                        log(TAG, bytes.length);
                     }
                 });
             }
@@ -59,7 +59,7 @@ public class StringActivity extends APIBaseActivity {
                         .subscribe(new Action1<byte[]>() {
                             @Override
                             public void call(byte[] bytes) {
-                                log(bytes.length, TAG);
+                                log(TAG, bytes.length);
                             }
                         });
             }
@@ -70,7 +70,7 @@ public class StringActivity extends APIBaseActivity {
                 StringObservable.join(Observable.just("abc", "def"), "#").subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        log(s, TAG);
+                        log(TAG, s);
                     }
                 });
             }
@@ -81,7 +81,7 @@ public class StringActivity extends APIBaseActivity {
                 StringObservable.split(Observable.just("ab#cd#ef"), "#").subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        log(s, TAG);
+                        log(TAG, s);
                     }
                 });
             }
@@ -93,7 +93,7 @@ public class StringActivity extends APIBaseActivity {
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                log(s, TAG);
+                                log(TAG, s);
                             }
                         });
             }

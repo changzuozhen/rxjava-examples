@@ -33,7 +33,7 @@ public class SampleCode {
                         "                    public void call(Throwable throwable) {\n" +
                         "                      log(throwable);\n" +
                         "                    }\n" +
-"              });\n");
+                        "              });\n");
         mCodes.put(Constants.Combine.groupjoin,
                 "    Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
                         "      @Override\n" +
@@ -207,19 +207,20 @@ public class SampleCode {
                         "                    }\n" +
                         "                  });\n");
         mCodes.put(Constants.BlockingObservable.forEach,
-                "    Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
-                        "      @Override\n" +
-                        "      public void call(Subscriber<? super Integer> subscriber) {\n" +
-                        "        subscriber.onNext(1);\n" +
-                        "        subscriber.onNext(2);\n" +
-                        "        subscriber.onCompleted();\n" +
-                        "      }\n" +
-                        "    }).subscribeOn(Schedulers.newThread()).toBlocking().forEach(new Action1<Integer>() {\n" +
-                        "      @Override\n" +
-                        "      public void call(Integer integer) {\n" +
-                        "        log(integer);\n" +
-                        "      }\n" +
-                        "    });\n");
+                "                Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
+                        "                    @Override\n" +
+                        "                    public void call(Subscriber<? super Integer> subscriber) {\n" +
+                        "                        subscriber.onNext(1);\n" +
+                        "                        subscriber.onNext(2);\n" +
+                        "                        subscriber.onCompleted();\n" +
+                        "                    }\n" +
+                        "                }).subscribeOn(Schedulers.newThread()).toBlocking().forEach(new Action1<Integer>() {\n" +
+                        "                    @Override\n" +
+                        "                    public void call(Integer integer) {\n" +
+                        "                        log(integer, TAG);\n" +
+                        "                        sleep(500, TAG);\n" +
+                        "                    }\n" +
+                        "                });\n");
         mCodes.put(Constants.Condition.takeWhileWithIndex,
                 "    logNotImplemented();\n");
         mCodes.put(Constants.BlockingObservable.next,

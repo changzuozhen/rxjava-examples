@@ -17,13 +17,14 @@ import union.uc.com.rxjava_example.contants.Constants;
  */
 public class BlockingObservableActivity extends APIBaseActivity {
 
-    private static final String TAG = "BlockingObservableActiv";
+    private static final String TAG = "BlockingObservableActivity";
 
     @Override
     protected void onRegisterAction(ActionRegistery registery) {
         registery.add(Constants.BlockingObservable.forEach, new Runnable() {
             @Override
             public void run() {
+                // 对Observable发射的每一项数据调用一个方法，会阻塞直到Observable完成
                 Observable.create(new Observable.OnSubscribe<Integer>() {
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
@@ -34,7 +35,8 @@ public class BlockingObservableActivity extends APIBaseActivity {
                 }).subscribeOn(Schedulers.newThread()).toBlocking().forEach(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
+                        sleep(TAG, 500);
                     }
                 });
             }
@@ -50,7 +52,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().first();
-                log(i, TAG);
+                log(TAG, i);
             }
         });
         registery.add(Constants.BlockingObservable.firstOrDefault, new Runnable() {
@@ -62,7 +64,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().firstOrDefault(5000);
-                log(i, TAG);
+                log(TAG, i);
             }
         });
         registery.add(Constants.BlockingObservable.last, new Runnable() {
@@ -76,7 +78,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().last();
-                log(i, TAG);
+                log(TAG, i);
             }
         });
         registery.add(Constants.BlockingObservable.lastOrDefault, new Runnable() {
@@ -88,7 +90,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().lastOrDefault(5000);
-                log(i, TAG);
+                log(TAG, i);
             }
         });
         registery.add(Constants.BlockingObservable.mostRecent, new Runnable() {
@@ -103,7 +105,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().mostRecent(5000).iterator();
                 while (itr.hasNext()) {
-                    log(itr.next(), TAG);
+                    log(TAG, itr.next());
                 }
             }
         });
@@ -119,7 +121,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().next().iterator();
                 while (itr.hasNext()) {
-                    log(itr.next(), TAG);
+                    log(TAG, itr.next());
                 }
             }
         });
@@ -135,7 +137,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().latest().iterator();
                 while (itr.hasNext()) {
-                    log(itr.next(), TAG);
+                    log(TAG, itr.next());
                 }
             }
         });
@@ -149,7 +151,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().single();
-                log(i, TAG);
+                log(TAG, i);
             }
         });
         registery.add(Constants.BlockingObservable.singleOrDefault, new Runnable() {
@@ -161,7 +163,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().singleOrDefault(3000);
-                log(i, TAG);
+                log(TAG, i);
             }
         });
         registery.add(Constants.BlockingObservable.toFuture, new Runnable() {
@@ -175,13 +177,13 @@ public class BlockingObservableActivity extends APIBaseActivity {
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().toFuture();
                 try {
-                    log(future.get(), TAG);
+                    log(TAG, future.get());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                    log(e, TAG);
+                    log(TAG, e);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
-                    log(e, TAG);
+                    log(TAG, e);
                 }
             }
         });
@@ -197,7 +199,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().toIterable().iterator();
                 while (itr.hasNext()) {
-                    log(itr.next(), TAG);
+                    log(TAG, itr.next());
                 }
             }
         });
@@ -213,7 +215,7 @@ public class BlockingObservableActivity extends APIBaseActivity {
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().getIterator();
                 while (itr.hasNext()) {
-                    log(itr.next(), TAG);
+                    log(TAG, itr.next());
                 }
             }
         });

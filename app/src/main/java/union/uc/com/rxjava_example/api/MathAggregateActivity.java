@@ -21,7 +21,7 @@ public class MathAggregateActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer, TAG);
+                                log(TAG, integer);
                             }
                         });
             }
@@ -32,7 +32,7 @@ public class MathAggregateActivity extends APIBaseActivity {
                 MathObservable.averageLong(Observable.just(2L, 4L, 1L, 5L)).subscribe(new Action1<Long>() {
                     @Override
                     public void call(Long l) {
-                        log(l, TAG);
+                        log(TAG, l);
                     }
                 });
             }
@@ -44,7 +44,7 @@ public class MathAggregateActivity extends APIBaseActivity {
                         .subscribe(new Action1<Float>() {
                             @Override
                             public void call(Float f) {
-                                log(f, TAG);
+                                log(TAG, f);
                             }
                         });
             }
@@ -56,7 +56,7 @@ public class MathAggregateActivity extends APIBaseActivity {
                         .subscribe(new Action1<Double>() {
                             @Override
                             public void call(Double f) {
-                                log(f, TAG);
+                                log(TAG, f);
                             }
                         });
             }
@@ -67,7 +67,7 @@ public class MathAggregateActivity extends APIBaseActivity {
                 MathObservable.max(Observable.just(1, 2, 3)).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -84,7 +84,7 @@ public class MathAggregateActivity extends APIBaseActivity {
                 MathObservable.min(Observable.just(1, 2, 3)).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -101,7 +101,7 @@ public class MathAggregateActivity extends APIBaseActivity {
                 MathObservable.sumInteger(Observable.just(1, 2, 3)).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -112,7 +112,7 @@ public class MathAggregateActivity extends APIBaseActivity {
                 MathObservable.sumLong(Observable.just(1L, 2L, 3L)).subscribe(new Action1<Long>() {
                     @Override
                     public void call(Long l) {
-                        log(l, TAG);
+                        log(TAG, l);
                     }
                 });
             }
@@ -124,7 +124,7 @@ public class MathAggregateActivity extends APIBaseActivity {
                         .subscribe(new Action1<Float>() {
                             @Override
                             public void call(Float f) {
-                                log(f, TAG);
+                                log(TAG, f);
                             }
                         });
             }
@@ -136,7 +136,7 @@ public class MathAggregateActivity extends APIBaseActivity {
                         .subscribe(new Action1<Double>() {
                             @Override
                             public void call(Double f) {
-                                log(f, TAG);
+                                log(TAG, f);
                             }
                         });
             }

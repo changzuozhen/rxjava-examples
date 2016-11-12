@@ -124,30 +124,30 @@ public abstract class APIBaseActivity extends Activity {
     }
 
     protected void logNotImplemented(String tag) {
-        log("RxJava not implement!", tag, 3);
+        log(tag, 3, "RxJava not implement!");
     }
 
     protected void logUseObservable(String tag) {
-        log("Use Observable!", tag, 3);
+        log(tag, 3, "Use Observable!");
     }
 
-    protected <T> void log(T value, String tag) {
-        log("" + value, tag, 3);
+    protected <T> void log(String tag, T value) {
+        log(tag, 3, "" + value);
     }
 
-    protected void log(Throwable throwable, String tag) {
-        log("error:" + throwable.getMessage(), tag, 3);
+    protected void log(String tag, Throwable throwable) {
+        log(tag, 3, "error:" + throwable.getMessage());
     }
 
     protected void logLineSeperator(String tag) {
-        log("------------------", tag, 3);
+        log(tag, 3, "------------------");
     }
 
-    protected void log(final String tipLine, String tag) {
-        log(tipLine, tag, 3);
+    protected void log(String tag, final String tipLine) {
+        log(tag, 3, tipLine);
     }
 
-    protected void log(final String tipLine, String tag, int deepth) {
+    protected void log(String tag, int deepth, final String tipLine) {
         //ensure log on ui thread
         runOnUiThread(new Runnable() {
             @Override
@@ -171,11 +171,13 @@ public abstract class APIBaseActivity extends Activity {
         });
     }
 
-    protected void sleep(int millsecond, String tag) {
+    protected void sleep(String tag, int millsecond) {
         try {
+            log(tag, 3, "---------sleep " + millsecond +
+                    "---------");
             Thread.sleep(millsecond);
         } catch (Exception e) {
-            log(e.getMessage(), tag, 3);
+            log(tag, 3, e.getMessage());
         }
     }
 

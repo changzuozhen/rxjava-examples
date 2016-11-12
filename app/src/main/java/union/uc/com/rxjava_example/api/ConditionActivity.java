@@ -29,7 +29,7 @@ public class ConditionActivity extends APIBaseActivity {
                 Observable.amb(Observable.create(new Observable.OnSubscribe<Integer>() {
                             @Override
                             public void call(Subscriber<? super Integer> subscriber) {
-                                sleep(1000, TAG);
+                                sleep(TAG, 1000);
                                 subscriber.onNext(1);
                                 subscriber.onNext(11);
                                 subscriber.onCompleted();
@@ -38,7 +38,7 @@ public class ConditionActivity extends APIBaseActivity {
                         Observable.create(new Observable.OnSubscribe<Integer>() {
                             @Override
                             public void call(Subscriber<? super Integer> subscriber) {
-                                sleep(500, TAG);
+                                sleep(TAG, 500);
                                 subscriber.onNext(2);
                                 subscriber.onNext(22);
                                 subscriber.onCompleted();
@@ -47,7 +47,7 @@ public class ConditionActivity extends APIBaseActivity {
                         Observable.create(new Observable.OnSubscribe<Integer>() {
                             @Override
                             public void call(Subscriber<? super Integer> subscriber) {
-                                sleep(300, TAG);
+                                sleep(TAG, 300);
                                 subscriber.onNext(3);
                                 subscriber.onNext(33);
                                 subscriber.onCompleted();
@@ -55,7 +55,7 @@ public class ConditionActivity extends APIBaseActivity {
                         }).subscribeOn(Schedulers.newThread())).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -66,7 +66,7 @@ public class ConditionActivity extends APIBaseActivity {
                 Observable.<Integer>empty().defaultIfEmpty(3).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -85,7 +85,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -104,7 +104,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }, Observable.just(1, 2, 3)).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -116,7 +116,7 @@ public class ConditionActivity extends APIBaseActivity {
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
                         for (int i = 0; i < 10; ++i) {
-                            sleep(200, TAG);
+                            sleep(TAG, 200);
                             subscriber.onNext(i);
                         }
                         subscriber.onCompleted();
@@ -127,7 +127,7 @@ public class ConditionActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer, TAG);
+                                log(TAG, integer);
                             }
                         });
             }
@@ -143,7 +143,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -168,7 +168,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }, map).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -184,7 +184,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -200,7 +200,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -224,7 +224,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -240,7 +240,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        log(aBoolean, TAG);
+                        log(TAG, aBoolean);
                     }
                 });
             }
@@ -251,7 +251,7 @@ public class ConditionActivity extends APIBaseActivity {
                 Observable.range(1, 10).contains(3).subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        log(aBoolean, TAG);
+                        log(TAG, aBoolean);
                     }
                 });
             }
@@ -267,7 +267,7 @@ public class ConditionActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        log(aBoolean, TAG);
+                        log(TAG, aBoolean);
                     }
                 });
             }
@@ -278,7 +278,7 @@ public class ConditionActivity extends APIBaseActivity {
                 Observable.empty().isEmpty().subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        log(aBoolean, TAG);
+                        log(TAG, aBoolean);
                     }
                 });
             }
@@ -296,7 +296,7 @@ public class ConditionActivity extends APIBaseActivity {
                         }).subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        log(aBoolean, TAG);
+                        log(TAG, aBoolean);
                     }
                 });
             }

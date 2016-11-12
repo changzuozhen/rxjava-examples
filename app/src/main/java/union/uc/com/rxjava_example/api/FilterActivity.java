@@ -33,7 +33,7 @@ public class FilterActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -44,7 +44,7 @@ public class FilterActivity extends APIBaseActivity {
                 Observable.range(1, 10).takeLast(3).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -56,7 +56,7 @@ public class FilterActivity extends APIBaseActivity {
                 Observable.range(1, 10).last().subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
                 // last with predicate
@@ -68,7 +68,7 @@ public class FilterActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -79,7 +79,7 @@ public class FilterActivity extends APIBaseActivity {
                 Observable.range(1, 10).lastOrDefault(10).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
                 Observable.range(1, 10).lastOrDefault(10, new Func1<Integer, Boolean>() {
@@ -90,7 +90,7 @@ public class FilterActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -108,7 +108,7 @@ public class FilterActivity extends APIBaseActivity {
                                 for (Integer i : integers) {
                                     s += i;
                                 }
-                                log(s, TAG);
+                                log(TAG, s);
                             }
                         });
 
@@ -117,7 +117,7 @@ public class FilterActivity extends APIBaseActivity {
                     public void call(Subscriber<? super Integer> subscriber) {
                         for (int i = 0; i < 10; i++) {
                             subscriber.onNext(i);
-                            sleep(100, TAG);
+                            sleep(TAG, 100);
                         }
                     }
                 })
@@ -130,7 +130,7 @@ public class FilterActivity extends APIBaseActivity {
                                 for (Integer i : integers) {
                                     s += i;
                                 }
-                                log(s, TAG);
+                                log(TAG, s);
                             }
                         });
             }
@@ -141,7 +141,7 @@ public class FilterActivity extends APIBaseActivity {
                 Observable.range(1, 10).skip(2).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -152,7 +152,7 @@ public class FilterActivity extends APIBaseActivity {
                 Observable.range(1, 10).skipLast(3).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -163,7 +163,7 @@ public class FilterActivity extends APIBaseActivity {
                 Observable.range(1, 10).take(3).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -174,7 +174,7 @@ public class FilterActivity extends APIBaseActivity {
                 Observable.range(1, 10).first().subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -190,7 +190,7 @@ public class FilterActivity extends APIBaseActivity {
                 }).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -201,7 +201,7 @@ public class FilterActivity extends APIBaseActivity {
                 Observable.range(1, 10).firstOrDefault(3).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -212,7 +212,7 @@ public class FilterActivity extends APIBaseActivity {
                 Observable.range(1, 10).elementAt(3).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -223,7 +223,7 @@ public class FilterActivity extends APIBaseActivity {
                 Observable.range(1, 10).elementAtOrDefault(100, 1000).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -236,7 +236,7 @@ public class FilterActivity extends APIBaseActivity {
                     public void call(Subscriber<? super Integer> subscriber) {
                         for (int i = 0; i < 10; i++) {
                             subscriber.onNext(i);
-                            sleep(100, TAG);
+                            sleep(TAG, 100);
                         }
                     }
                 })
@@ -245,7 +245,7 @@ public class FilterActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer, TAG);
+                                log(TAG, integer);
 
                             }
                         });
@@ -267,13 +267,13 @@ public class FilterActivity extends APIBaseActivity {
                     public void call(Subscriber<? super Integer> subscriber) {
                         for (int i = 0; i < 5; i++) {
                             subscriber.onNext(i);
-                            sleep(300, TAG);
+                            sleep(TAG, 300);
                         }
                     }
                 }).throttleLast(1, TimeUnit.SECONDS).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
             }
@@ -286,13 +286,13 @@ public class FilterActivity extends APIBaseActivity {
                     public void call(Subscriber<? super Integer> subscriber) {
                         for (int i = 0; i < 5; i++) {
                             subscriber.onNext(i);
-                            sleep(300, TAG);
+                            sleep(TAG, 300);
                         }
                     }
                 }).throttleFirst(1, TimeUnit.SECONDS).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 });
                 AsyncExecutor.SINGLETON.schedule(new Runnable() {
@@ -313,7 +313,7 @@ public class FilterActivity extends APIBaseActivity {
                     public void call(Subscriber<? super Integer> subscriber) {
                         for (int i = 0; i < 10; i++) {
                             subscriber.onNext(i);
-                            sleep(500, TAG);
+                            sleep(TAG, 500);
                         }
                         subscriber.onCompleted();
                     }
@@ -324,7 +324,7 @@ public class FilterActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer, TAG);
+                                log(TAG, integer);
                             }
                         });
             }
@@ -336,11 +336,11 @@ public class FilterActivity extends APIBaseActivity {
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
                         subscriber.onNext(1);
-                        sleep(500, TAG);
+                        sleep(TAG, 500);
                         subscriber.onNext(2);
-                        sleep(1000, TAG);
+                        sleep(TAG, 1000);
                         subscriber.onNext(3);
-                        sleep(2000, TAG);
+                        sleep(TAG, 2000);
                         subscriber.onNext(4);
                         subscriber.onCompleted();
                     }
@@ -350,7 +350,7 @@ public class FilterActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer, TAG);
+                                log(TAG, integer);
                             }
                         });
             }
@@ -361,12 +361,12 @@ public class FilterActivity extends APIBaseActivity {
                 Observable.<Integer>never().timeout(1, TimeUnit.SECONDS).subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer integer) {
-                        log(integer, TAG);
+                        log(TAG, integer);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        log(throwable, TAG);
+                        log(TAG, throwable);
                     }
                 });
             }
@@ -381,7 +381,7 @@ public class FilterActivity extends APIBaseActivity {
                                 .subscribe(new Action1<Integer>() {
                                     @Override
                                     public void call(Integer integer) {
-                                        log(integer, TAG);
+                                        log(TAG, integer);
                                     }
                                 });
                     }
@@ -394,7 +394,7 @@ public class FilterActivity extends APIBaseActivity {
                         .subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer, TAG);
+                                log(TAG, integer);
                             }
                         });
             }
@@ -408,7 +408,7 @@ public class FilterActivity extends APIBaseActivity {
                                 ofType(Integer.class).subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer, TAG);
+                                log(TAG, integer);
                             }
                         });
                     }
@@ -428,17 +428,17 @@ public class FilterActivity extends APIBaseActivity {
                         }).ignoreElements().subscribe(new Action1<Integer>() {
                             @Override
                             public void call(Integer integer) {
-                                log(integer, TAG);
+                                log(TAG, integer);
                             }
                         }, new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                log(throwable, TAG);
+                                log(TAG, throwable);
                             }
                         }, new Action0() {
                             @Override
                             public void call() {
-                                log("onComplete", TAG);
+                                log(TAG, "onComplete");
                             }
                         });
                     }
