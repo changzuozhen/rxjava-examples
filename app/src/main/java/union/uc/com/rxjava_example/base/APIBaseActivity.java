@@ -91,35 +91,50 @@ public abstract class APIBaseActivity extends Activity {
     }
 
     private void setupUIComponents() {
+        /**
+         *
+         container
+
+         */
+
         //top
         mTop = new LinearLayout(this);
         mTop.setOrientation(LinearLayout.VERTICAL);
+        ScrollView topScrollView = new ScrollView(this);
+        topScrollView.addView(mTop);
+        topScrollView.setBackgroundColor(Color.WHITE);
+
+
         //bottom
-        LinearLayout bottom = new LinearLayout(this);
+        //bottom-log
         mLog = new TextView(this);
         mLog.setSingleLine(false);
         ScrollView scrollView = new ScrollView(this);
         scrollView.addView(mLog);
-        bottom.addView(scrollView,
-                new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1));
+
+        //bottom-demolist
         ListView actionList = new ListView(this);
         onRegisterAction(mActionAdapter);
         actionList.setAdapter(mActionAdapter);
-        bottom.addView(new SeperatorView(this, SeperatorView.MODE_VERTICAL));
+
+        LinearLayout bottom = new LinearLayout(this);
+        bottom.setOrientation(LinearLayout.VERTICAL);
         bottom.addView(actionList,
-                new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1));
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1));
+        bottom.addView(new SeperatorView(this, SeperatorView.MODE_HORIZENTAL));
+        bottom.addView(scrollView,
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1));
+
 
         //container
         LinearLayout container = new LinearLayout(this);
         container.setOrientation(LinearLayout.VERTICAL);
-        ScrollView topScrollView = new ScrollView(this);
-        topScrollView.addView(mTop);
-        topScrollView.setBackgroundColor(Color.WHITE);
+
         container.addView(topScrollView,
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 3));
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 5));
         container.addView(new SeperatorView(this, SeperatorView.MODE_HORIZENTAL));
         container.addView(bottom,
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 2));
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 3));
         setContentView(container);
     }
 
@@ -150,14 +165,14 @@ public abstract class APIBaseActivity extends Activity {
     protected void log(String tag, int deepth, final String tipLine) {
         StackTraceElement ste = new Throwable().getStackTrace()[deepth];
 //        StackTraceElement[] ste = new Throwable().getStackTrace();
-        String log = build(tipLine, ste);
+        final String log = build(tipLine, ste);
         Log.d(tag, log);
 
         //ensure log on ui thread
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mLog.setText(mLog.getText().toString() + "\r\n" + tipLine);
+                mLog.setText(mLog.getText().toString() + "\r\n" + log);
             }
         });
     }
