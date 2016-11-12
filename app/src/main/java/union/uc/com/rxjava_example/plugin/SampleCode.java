@@ -205,16 +205,19 @@ public class SampleCode {
                 "                    }\n" +
                 "                });\n");
         mCodes.put(Constants.Condition.takeWhileWithIndex, "    logNotImplemented();\n");
-        mCodes.put(Constants.BlockingObservable.next, "    Iterator<Integer> itr = Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
-                "      @Override\n" +
-                "      public void call(Subscriber<? super Integer> subscriber) {\n" +
-                "        subscriber.onNext(1);\n" +
-                "        subscriber.onNext(2);\n" +
-                "        subscriber.onCompleted();\n" +
-                "      }\n" +
-                "    }).subscribeOn(Schedulers.newThread()).toBlocking().next().iterator();\n" +
-                "    while (itr.hasNext()) {\n" +
-                "      log(itr.next());\n");
+        mCodes.put(Constants.BlockingObservable.next, "                Iterator<Integer> itr = Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
+                "                    @Override\n" +
+                "                    public void call(Subscriber<? super Integer> subscriber) {\n" +
+                "                        sleep(TAG, 500);\n" +
+                "                        subscriber.onNext(1);\n" +
+                "                        sleep(TAG, 500);\n" +
+                "                        subscriber.onNext(2);\n" +
+                "                        subscriber.onCompleted();\n" +
+                "                    }\n" +
+                "                }).subscribeOn(Schedulers.newThread()).toBlocking().next().iterator();\n" +
+                "                while (itr.hasNext()) {\n" +
+                "                    log(TAG, itr.next());\n" +
+                "                }\n");
         mCodes.put(Constants.MathAggregate.count, "    logUseObservable();\n");
         mCodes.put(Constants.ConnectableObservable.refCount, "    ConnectableObservable<Integer> co =\n" +
                 "      Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
@@ -848,16 +851,20 @@ public class SampleCode {
                 "        log(bytes.length);\n" +
                 "      }\n" +
                 "    });\n");
-        mCodes.put(Constants.BlockingObservable.mostRecent, "    Iterator<Integer> itr = Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
-                "      @Override\n" +
-                "      public void call(Subscriber<? super Integer> subscriber) {\n" +
-                "        subscriber.onNext(1);\n" +
-                "        subscriber.onNext(2);\n" +
-                "        subscriber.onCompleted();\n" +
-                "      }\n" +
-                "    }).subscribeOn(Schedulers.newThread()).toBlocking().mostRecent(5000).iterator();\n" +
-                "    while (itr.hasNext()) {\n" +
-                "      log(itr.next());\n");
+        mCodes.put(Constants.BlockingObservable.mostRecent, "                Iterator<Integer> itr = Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
+                "                    @Override\n" +
+                "                    public void call(Subscriber<? super Integer> subscriber) {\n" +
+                "                        sleep(TAG, 10);\n" +
+                "                        subscriber.onNext(1);\n" +
+                "                        sleep(TAG, 10);\n" +
+                "                        subscriber.onNext(2);\n" +
+                "                        sleep(TAG, 10);\n" +
+                "                        subscriber.onCompleted();\n" +
+                "                    }\n" +
+                "                }).subscribeOn(Schedulers.newThread()).toBlocking().mostRecent(5000).iterator();\n" +
+                "                while (itr.hasNext()) {\n" +
+                "                    log(TAG, itr.next());\n" +
+                "                }\n");
         mCodes.put(Constants.MathAggregate.collect, "    logUseObservable();\n");
         mCodes.put(Constants.ErrorHandler.retryWhen, "    Observable.just(1, \"abc\", \"2\")\n" +
                 "              .cast(Integer.class)\n" +
@@ -937,16 +944,21 @@ public class SampleCode {
                 "    });\n");
         mCodes.put(Constants.MathAggregate.toList, "    logUseObservable();\n");
         mCodes.put(Constants.Combine.mergeDelayError, "    logNotImplemented();\n");
-        mCodes.put(Constants.BlockingObservable.getIterator, "    Iterator<Integer> itr = Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
-                "      @Override\n" +
-                "      public void call(Subscriber<? super Integer> subscriber) {\n" +
-                "        subscriber.onNext(1);\n" +
-                "        subscriber.onNext(2);\n" +
-                "        subscriber.onCompleted();\n" +
-                "      }\n" +
-                "    }).subscribeOn(Schedulers.newThread()).toBlocking().getIterator();\n" +
-                "    while (itr.hasNext()) {\n" +
-                "      log(itr.next());\n");
+        mCodes.put(Constants.BlockingObservable.getIterator, "                Iterator<Integer> itr = Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
+                "                    @Override\n" +
+                "                    public void call(Subscriber<? super Integer> subscriber) {\n" +
+                "                        sleep(TAG, 500);\n" +
+                "                        subscriber.onNext(1);\n" +
+                "                        sleep(TAG, 500);\n" +
+                "                        subscriber.onNext(2);\n" +
+                "                        sleep(TAG, 500);\n" +
+                "                        subscriber.onNext(3);\n" +
+                "                        subscriber.onCompleted();\n" +
+                "                    }\n" +
+                "                }).subscribeOn(Schedulers.newThread()).toBlocking().getIterator();\n" +
+                "                while (itr.hasNext()) {\n" +
+                "                    log(TAG, itr.next());\n" +
+                "                }\n");
         mCodes.put(Constants.Scheduler.new_thread, "    Observable.just(\"a\", \"b\")\n" +
                 "              .observeOn(Schedulers.newThread())\n" +
                 "              .subscribe(new Action1<String>() {\n" +
@@ -1262,31 +1274,44 @@ public class SampleCode {
                 "        log(s);\n" +
                 "      }\n" +
                 "    });\n");
-        mCodes.put(Constants.BlockingObservable.toFuture, "    Future<Integer> future = Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
-                "      @Override\n" +
-                "      public void call(Subscriber<? super Integer> subscriber) {\n" +
-                "        subscriber.onNext(2);\n" +
-                "        subscriber.onCompleted();\n" +
-                "      }\n" +
-                "    }).subscribeOn(Schedulers.newThread()).toBlocking().toFuture();\n" +
-                "    try {\n" +
-                "      log(future.get());\n" +
-                "    } catch (InterruptedException e) {\n" +
-                "      e.printStackTrace();\n" +
-                "      log(e);\n" +
-                "    } catch (ExecutionException e) {\n" +
-                "      e.printStackTrace();\n" +
-                "      log(e);\n");
-        mCodes.put(Constants.BlockingObservable.latest, "    Iterator<Integer> itr = Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
-                "      @Override\n" +
-                "      public void call(Subscriber<? super Integer> subscriber) {\n" +
-                "        subscriber.onNext(1);\n" +
-                "        subscriber.onNext(2);\n" +
-                "        subscriber.onCompleted();\n" +
-                "      }\n" +
-                "    }).subscribeOn(Schedulers.newThread()).toBlocking().latest().iterator();\n" +
-                "    while (itr.hasNext()) {\n" +
-                "      log(itr.next());\n");
+        mCodes.put(Constants.BlockingObservable.toFuture, "                Future<Integer> future = Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
+                "                    @Override\n" +
+                "                    public void call(Subscriber<? super Integer> subscriber) {\n" +
+                "                        sleep(TAG, 500);\n" +
+                "                        subscriber.onNext(2);\n" +
+                "                        subscriber.onCompleted();\n" +
+                "                    }\n" +
+                "                }).subscribeOn(Schedulers.newThread()).toBlocking().toFuture();\n" +
+                "                try {\n" +
+                "                    log(TAG, \"future created get()\");\n" +
+                "                    log(TAG, future.get());\n" +
+                "                } catch (InterruptedException e) {\n" +
+                "                    e.printStackTrace();\n" +
+                "                    log(TAG, e);\n" +
+                "                } catch (ExecutionException e) {\n" +
+                "                    e.printStackTrace();\n" +
+                "                    log(TAG, e);\n" +
+                "                }\n");
+        mCodes.put(Constants.BlockingObservable.latest, "                Iterator<Integer> itr = Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
+                "                    @Override\n" +
+                "                    public void call(Subscriber<? super Integer> subscriber) {\n" +
+                "                        sleep(TAG, 50);\n" +
+                "                        subscriber.onNext(0);\n" +
+                "                        subscriber.onNext(1);\n" +
+                "                        sleep(TAG, 50);\n" +
+                "                        subscriber.onNext(2);\n" +
+                "                        subscriber.onNext(3);\n" +
+                "                        sleep(TAG, 50);\n" +
+                "                        subscriber.onNext(4);\n" +
+                "                        subscriber.onNext(5);\n" +
+                "                        sleep(TAG, 50);\n" +
+                "                        subscriber.onNext(6);\n" +
+                "                        subscriber.onCompleted();\n" +
+                "                    }\n" +
+                "                }).subscribeOn(Schedulers.newThread()).toBlocking().latest().iterator();\n" +
+                "                while (itr.hasNext()) {\n" +
+                "                    log(TAG, itr.next());\n" +
+                "                }\n");
         mCodes.put(Constants.Transformation.window, "    Observable.range(1, 10).window(3).subscribe(new Action1<Observable<Integer>>() {\n" +
                 "      @Override\n" +
                 "      public void call(final Observable<Integer> integerObservable) {\n" +
@@ -1437,16 +1462,21 @@ public class SampleCode {
                 "                  log(\"\" + integer + \" on \" + Thread.currentThread().getName());\n" +
                 "                }\n" +
                 "              });\n");
-        mCodes.put(Constants.BlockingObservable.toIterable, "    Iterator<Integer> itr = Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
-                "      @Override\n" +
-                "      public void call(Subscriber<? super Integer> subscriber) {\n" +
-                "        subscriber.onNext(1);\n" +
-                "        subscriber.onNext(2);\n" +
-                "        subscriber.onCompleted();\n" +
-                "      }\n" +
-                "    }).subscribeOn(Schedulers.newThread()).toBlocking().toIterable().iterator();\n" +
-                "    while (itr.hasNext()) {\n" +
-                "      log(itr.next());\n");
+        mCodes.put(Constants.BlockingObservable.toIterable, "                Iterator<Integer> itr = Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
+                "                    @Override\n" +
+                "                    public void call(Subscriber<? super Integer> subscriber) {\n" +
+                "                        sleep(TAG, 500);\n" +
+                "                        subscriber.onNext(1);\n" +
+                "                        sleep(TAG, 500);\n" +
+                "                        subscriber.onNext(2);\n" +
+                "                        sleep(TAG, 500);\n" +
+                "                        subscriber.onNext(3);\n" +
+                "                        subscriber.onCompleted();\n" +
+                "                    }\n" +
+                "                }).subscribeOn(Schedulers.newThread()).toBlocking().toIterable().iterator();\n" +
+                "                while (itr.hasNext()) {\n" +
+                "                    log(TAG, itr.next());\n" +
+                "                }\n");
         mCodes.put(Constants.ObservableCreate.range, "    Observable.range(1, 10).subscribe(new Action1<Integer>() {\n" +
                 "      @Override\n" +
                 "      public void call(Integer integer) {\n" +

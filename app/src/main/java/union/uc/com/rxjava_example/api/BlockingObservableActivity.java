@@ -111,14 +111,19 @@ public class BlockingObservableActivity extends APIBaseActivity {
                 log(TAG, i);
             }
         });
+
+        // 返回一个总是返回Observable最近发射的数据的iterable
         registery.add(Constants.BlockingObservable.mostRecent, new Runnable() {
             @Override
             public void run() {
                 Iterator<Integer> itr = Observable.create(new Observable.OnSubscribe<Integer>() {
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
+                        sleep(TAG, 10);
                         subscriber.onNext(1);
+                        sleep(TAG, 10);
                         subscriber.onNext(2);
+                        sleep(TAG, 10);
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().mostRecent(5000).iterator();
@@ -127,13 +132,17 @@ public class BlockingObservableActivity extends APIBaseActivity {
                 }
             }
         });
+
+        // 返回一个Iterable，会阻塞直到Observable发射了另一个值，然后返回那个值
         registery.add(Constants.BlockingObservable.next, new Runnable() {
             @Override
             public void run() {
                 Iterator<Integer> itr = Observable.create(new Observable.OnSubscribe<Integer>() {
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
+                        sleep(TAG, 500);
                         subscriber.onNext(1);
+                        sleep(TAG, 500);
                         subscriber.onNext(2);
                         subscriber.onCompleted();
                     }
@@ -143,14 +152,25 @@ public class BlockingObservableActivity extends APIBaseActivity {
                 }
             }
         });
+
+        // 返回一个iterable，会阻塞直到或者除非Observable发射了一个iterable没有返回的值，然后返回这个值
         registery.add(Constants.BlockingObservable.latest, new Runnable() {
             @Override
             public void run() {
                 Iterator<Integer> itr = Observable.create(new Observable.OnSubscribe<Integer>() {
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
+                        sleep(TAG, 50);
+                        subscriber.onNext(0);
                         subscriber.onNext(1);
+                        sleep(TAG, 50);
                         subscriber.onNext(2);
+                        subscriber.onNext(3);
+                        sleep(TAG, 50);
+                        subscriber.onNext(4);
+                        subscriber.onNext(5);
+                        sleep(TAG, 50);
+                        subscriber.onNext(6);
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().latest().iterator();
@@ -184,17 +204,21 @@ public class BlockingObservableActivity extends APIBaseActivity {
                 log(TAG, i);
             }
         });
+
+        // 将Observable转换为一个Future
         registery.add(Constants.BlockingObservable.toFuture, new Runnable() {
             @Override
             public void run() {
                 Future<Integer> future = Observable.create(new Observable.OnSubscribe<Integer>() {
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
+                        sleep(TAG, 500);
                         subscriber.onNext(2);
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().toFuture();
                 try {
+                    log(TAG, "future created get()");
                     log(TAG, future.get());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -205,14 +229,20 @@ public class BlockingObservableActivity extends APIBaseActivity {
                 }
             }
         });
+
+        // 将一个发射数据序列的Observable转换为一个Iterable
         registery.add(Constants.BlockingObservable.toIterable, new Runnable() {
             @Override
             public void run() {
                 Iterator<Integer> itr = Observable.create(new Observable.OnSubscribe<Integer>() {
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
+                        sleep(TAG, 500);
                         subscriber.onNext(1);
+                        sleep(TAG, 500);
                         subscriber.onNext(2);
+                        sleep(TAG, 500);
+                        subscriber.onNext(3);
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().toIterable().iterator();
@@ -221,14 +251,20 @@ public class BlockingObservableActivity extends APIBaseActivity {
                 }
             }
         });
+
+        // 将一个发射数据序列的Observable转换为一个Iterator
         registery.add(Constants.BlockingObservable.getIterator, new Runnable() {
             @Override
             public void run() {
                 Iterator<Integer> itr = Observable.create(new Observable.OnSubscribe<Integer>() {
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
+                        sleep(TAG, 500);
                         subscriber.onNext(1);
+                        sleep(TAG, 500);
                         subscriber.onNext(2);
+                        sleep(TAG, 500);
+                        subscriber.onNext(3);
                         subscriber.onCompleted();
                     }
                 }).subscribeOn(Schedulers.newThread()).toBlocking().getIterator();
