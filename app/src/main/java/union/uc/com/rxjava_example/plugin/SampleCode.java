@@ -1205,36 +1205,44 @@ public class SampleCode {
                 "    });\n" +
                 "    log(\"begin connect\");\n" +
                 "    co.connect();\n");
-        mCodes.put(Constants.Combine.combineLatest, "    Observable.combineLatest(Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
-                "                               @Override\n" +
-                "                               public void call(Subscriber<? super Integer> subscriber) {\n" +
-                "                                 for (int i = 0; i < 10; ++i) {\n" +
-                "                                   subscriber.onNext(i);\n" +
-                "                                   sleep(1000);\n" +
-                "                                 }\n" +
-                "                               }\n" +
-                "                             }).subscribeOn(Schedulers.newThread()),\n" +
-                "                             Observable.create(new Observable.OnSubscribe<String>() {\n" +
-                "                               @Override\n" +
-                "                               public void call(Subscriber<? super String> subscriber) {\n" +
-                "                                 final String[] arr = new String[] {\"a\", \"b\", \"c\"};\n" +
-                "                                 for (int i = 0; i < arr.length; ++i) {\n" +
-                "                                   subscriber.onNext(arr[i]);\n" +
-                "                                   sleep(400);\n" +
-                "                                 }\n" +
-                "                               }\n" +
-                "                             }).subscribeOn(Schedulers.newThread()),\n" +
-                "                             new Func2<Integer, String, String>() {\n" +
-                "                               @Override\n" +
-                "                               public String call(Integer integer, String s) {\n" +
-                "                                 return \"\" + integer + \" \" + s;\n" +
-                "                               }\n" +
-                "                             }).subscribe(new Action1<String>() {\n" +
-                "      @Override\n" +
-                "      public void call(String s) {\n" +
-                "        log(s);\n" +
-                "      }\n" +
-                "    });\n");
+        mCodes.put(Constants.Combine.combineLatest, "                Observable\n" +
+                "                        .combineLatest(\n" +
+                "                                Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
+                "                                    @Override\n" +
+                "                                    public void call(Subscriber<? super Integer> subscriber) {\n" +
+                "                                        for (int i = 0; i < 10; ++i) {\n" +
+                "                                            sleep(TAG, 501);\n" +
+                "                                            subscriber.onNext(i);\n" +
+                "                                            sleep(TAG, 502);\n" +
+                "                                        }\n" +
+                "                                    }\n" +
+                "                                }).subscribeOn(Schedulers.newThread()),\n" +
+                "\n" +
+                "                                Observable.create(new Observable.OnSubscribe<String>() {\n" +
+                "                                    @Override\n" +
+                "                                    public void call(Subscriber<? super String> subscriber) {\n" +
+                "                                        final String[] arr = new String[]{\"a\", \"b\", \"c\"};\n" +
+                "                                        for (int i = 0; i < arr.length; ++i) {\n" +
+                "                                            sleep(TAG, 201);\n" +
+                "                                            subscriber.onNext(arr[i]);\n" +
+                "                                            sleep(TAG, 202);\n" +
+                "                                        }\n" +
+                "                                    }\n" +
+                "                                }).subscribeOn(Schedulers.newThread()),\n" +
+                "\n" +
+                "                                new Func2<Integer, String, String>() {\n" +
+                "                                    @Override\n" +
+                "                                    public String call(Integer integer, String s) {\n" +
+                "                                        return \"\" + integer + \" \" + s;\n" +
+                "                                    }\n" +
+                "                                }\n" +
+                "                        )\n" +
+                "                        .subscribe(new Action1<String>() {\n" +
+                "                            @Override\n" +
+                "                            public void call(String s) {\n" +
+                "                                log(TAG, s);\n" +
+                "                            }\n" +
+                "                        });\n");
         mCodes.put(Constants.Condition.exists, "    Observable.just(1, 2, 3).exists(new Func1<Integer, Boolean>() {\n" +
                 "      @Override\n" +
                 "      public Boolean call(Integer integer) {\n" +
