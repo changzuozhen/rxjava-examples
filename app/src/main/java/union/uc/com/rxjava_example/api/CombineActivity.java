@@ -1,5 +1,6 @@
 package union.uc.com.rxjava_example.api;
 
+
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -28,6 +29,8 @@ public class CombineActivity extends APIBaseActivity {
                 logNotImplemented(TAG);
             }
         });
+
+        // 将多个Observable合并为一个
         registery.add(Constants.Combine.merge, new Runnable() {
             @Override
             public void run() {
@@ -48,6 +51,7 @@ public class CombineActivity extends APIBaseActivity {
             }
         });
 
+        // 使用一个函数组合多个Observable发射的数据集合，然后再发射这个结果
         registery.add(Constants.Combine.zip, new Runnable() {
             @Override
             public void run() {
@@ -66,6 +70,8 @@ public class CombineActivity extends APIBaseActivity {
                         });
             }
         });
+
+        // 通过模式和计划组合多个Observables发射的数据集合
         registery.add(Constants.Combine.and_then_when, new Runnable() {
             @Override
             public void run() {
@@ -77,6 +83,7 @@ public class CombineActivity extends APIBaseActivity {
                                     @Override
                                     public String call(Integer integer, String s, String s2) {
                                         String ret = "" + integer + " " + s + " " + s2;
+                                        log(TAG, "then() called with: integer = [" + integer + "], s = [" + s + "], s2 = [" + s2 + "]");
                                         return ret;
                                     }
                                 });
@@ -89,93 +96,108 @@ public class CombineActivity extends APIBaseActivity {
             }
         });
 
+        // 当两个Observables中的任何一个发射了一个数据时，通过一个指定的函数组合每个Observable发射的最新数据（一共两个数据），然后发射这个函数的结果
         registery.add(Constants.Combine.combineLatest, new Runnable() {
             @Override
             public void run() {
-                Observable.combineLatest(Observable.create(new Observable.OnSubscribe<Integer>() {
-                            @Override
-                            public void call(Subscriber<? super Integer> subscriber) {
-                                for (int i = 0; i < 10; ++i) {
-                                    subscriber.onNext(i);
-                                    sleep(TAG, 1000);
-                                }
-                            }
-                        }).subscribeOn(Schedulers.newThread()),
-                        Observable.create(new Observable.OnSubscribe<String>() {
-                            @Override
-                            public void call(Subscriber<? super String> subscriber) {
-                                final String[] arr = new String[]{"a", "b", "c"};
-                                for (int i = 0; i < arr.length; ++i) {
-                                    subscriber.onNext(arr[i]);
-                                    sleep(TAG, 400);
-                                }
-                            }
-                        }).subscribeOn(Schedulers.newThread()),
-                        new Func2<Integer, String, String>() {
-                            @Override
-                            public String call(Integer integer, String s) {
-                                return "" + integer + " " + s;
-                            }
-                        }).subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String s) {
-                        log(TAG, s);
-                    }
-                });
-            }
-        });
+                Observable
+                        .combineLatest(
+                                Observable.create(new Observable.OnSubscribe<Integer>() {
+                                    @Override
+                                    public void call(Subscriber<? super Integer> subscriber) {
+                                        for (int i = 0; i < 10; ++i) {
+                                            sleep(TAG, 501);
+                                            subscriber.onNext(i);
+                                            sleep(TAG, 502);
+                                        }
+                                    }
+                                }).subscribeOn(Schedulers.newThread()),
 
-        registery.add(Constants.Combine.join, new Runnable() {
-                    @Override
-                    public void run() {
-                        Observable.create(new Observable.OnSubscribe<Integer>() {
-                            @Override
-                            public void call(Subscriber<? super Integer> subscriber) {
-                                for (int i = 0; i < 10; ++i) {
-                                    subscriber.onNext(i);
-                                    sleep(TAG, 1000);
-                                }
-                            }
-                        })
-                                .subscribeOn(Schedulers.newThread())
-                                .join(Observable.create(new Observable.OnSubscribe<String>() {
+                                Observable.create(new Observable.OnSubscribe<String>() {
                                     @Override
                                     public void call(Subscriber<? super String> subscriber) {
                                         final String[] arr = new String[]{"a", "b", "c"};
                                         for (int i = 0; i < arr.length; ++i) {
+                                            sleep(TAG, 201);
                                             subscriber.onNext(arr[i]);
-                                            sleep(TAG, 400);
+                                            sleep(TAG, 202);
                                         }
                                     }
-                                })
-                                        .subscribeOn(Schedulers.newThread()), new Func1<Integer, Observable<Long>>() {
-                                    @Override
-                                    public Observable<Long> call(Integer integer) {
-                                        return Observable.timer(1, TimeUnit.SECONDS);
-                                    }
-                                }, new Func1<String, Observable<Long>>() {
-                                    @Override
-                                    public Observable<Long> call(String s) {
-                                        return Observable.timer(2, TimeUnit.SECONDS);
-                                    }
-                                }, new Func2<Integer, String, String>() {
+                                }).subscribeOn(Schedulers.newThread()),
+
+                                new Func2<Integer, String, String>() {
                                     @Override
                                     public String call(Integer integer, String s) {
-                                        return " " + integer + " " + s;
+                                        return "" + integer + " " + s;
                                     }
-                                })
-                                .subscribe(new Action1<String>() {
+                                }
+                        )
+                        .subscribe(new Action1<String>() {
+                            @Override
+                            public void call(String s) {
+                                log(TAG, s);
+                            }
+                        });
+            }
+        });
+
+        //无论何时，如果一个Observable发射了一个数据项，只要在另一个Observable发射的数据项定义的时间窗口内，就将两个Observable发射的数据合并发射
+        registery.add(Constants.Combine.join, new Runnable() {
+                    @Override
+                    public void run() {
+                        Observable.create(
+                                new Observable.OnSubscribe<Integer>() {
                                     @Override
-                                    public void call(String s) {
-                                        log(TAG, s);
+                                    public void call(Subscriber<? super Integer> subscriber) {
+                                        for (int i = 0; i < 10; ++i) {
+                                            subscriber.onNext(i);
+                                            sleep(TAG, 1000);
+                                        }
                                     }
-                                });
+                                }).subscribeOn(Schedulers.newThread())
+                                .join(
+                                        Observable.create(new Observable.OnSubscribe<String>() {
+                                            @Override
+                                            public void call(Subscriber<? super String> subscriber) {
+                                                final String[] arr = new String[]{"a", "b", "c"};
+                                                for (int i = 0; i < arr.length; ++i) {
+                                                    subscriber.onNext(arr[i]);
+                                                    sleep(TAG, 400);
+                                                }
+                                            }
+                                        }).subscribeOn(Schedulers.newThread()),
+                                        new Func1<Integer, Observable<Long>>() {
+                                            @Override
+                                            public Observable<Long> call(Integer integer) {
+                                                return Observable.timer(1, TimeUnit.SECONDS);
+                                            }
+                                        },
+                                        new Func1<String, Observable<Long>>() {
+                                            @Override
+                                            public Observable<Long> call(String s) {
+                                                return Observable.timer(2, TimeUnit.SECONDS);
+                                            }
+                                        },
+                                        new Func2<Integer, String, String>() {
+                                            @Override
+                                            public String call(Integer integer, String s) {
+                                                return " " + integer + " " + s;
+                                            }
+                                        }
+                                )
+                                .subscribe(new Action1<String>() {
+                                               @Override
+                                               public void call(String s) {
+                                                   log(TAG, s);
+                                               }
+                                           }
+                                );
                     }
                 }
 
         );
 
-
+        // 无论何时，如果一个Observable发射了一个数据项，只要在另一个Observable发射的数据项定义的时间窗口内，就将两个Observable发射的数据合并发射
         registery.add(Constants.Combine.groupjoin, new Runnable() {
             @Override
             public void run() {
@@ -187,39 +209,41 @@ public class CombineActivity extends APIBaseActivity {
                             sleep(TAG, 1000);
                         }
                     }
-                })
-                        .subscribeOn(Schedulers.newThread())
+                }).subscribeOn(Schedulers.newThread())
                         .groupJoin(Observable.create(new Observable.OnSubscribe<String>() {
-                            @Override
-                            public void call(Subscriber<? super String> subscriber) {
-                                final String[] arr = new String[]{"a", "b", "c"};
-                                for (int i = 0; i < arr.length; ++i) {
-                                    subscriber.onNext(arr[i]);
-                                    sleep(TAG, 400);
-                                }
-                            }
-                        }).subscribeOn(Schedulers.newThread()), new Func1<Integer, Observable<Long>>() {
-                            @Override
-                            public Observable<Long> call(Integer integer) {
-                                return Observable.timer(1, TimeUnit.SECONDS);
-                            }
-                        }, new Func1<String, Observable<Long>>() {
-                            @Override
-                            public Observable<Long> call(String s) {
-                                return Observable.timer(2, TimeUnit.SECONDS);
-                            }
-                        }, new Func2<Integer, Observable<String>, Observable<String>>() {
-                            @Override
-                            public Observable<String> call(final Integer integer,
-                                                           Observable<String> stringObservable) {
-                                return stringObservable.map(new Func1<String, String>() {
                                     @Override
-                                    public String call(String s) {
-                                        return " " + integer + s;
+                                    public void call(Subscriber<? super String> subscriber) {
+                                        final String[] arr = new String[]{"a", "b", "c"};
+                                        for (int i = 0; i < arr.length; ++i) {
+                                            subscriber.onNext(arr[i]);
+                                            sleep(TAG, 400);
+                                        }
                                     }
-                                });
-                            }
-                        })
+                                }).subscribeOn(Schedulers.newThread()),
+                                new Func1<Integer, Observable<Long>>() {
+                                    @Override
+                                    public Observable<Long> call(Integer integer) {
+                                        return Observable.timer(1, TimeUnit.SECONDS);
+                                    }
+                                },
+                                new Func1<String, Observable<Long>>() {
+                                    @Override
+                                    public Observable<Long> call(String s) {
+                                        return Observable.timer(2, TimeUnit.SECONDS);
+                                    }
+                                },
+                                new Func2<Integer, Observable<String>, Observable<String>>() {
+                                    @Override
+                                    public Observable<String> call(final Integer integer,
+                                                                   Observable<String> stringObservable) {
+                                        return stringObservable.map(new Func1<String, String>() {
+                                            @Override
+                                            public String call(String s) {
+                                                return " " + integer + s;
+                                            }
+                                        });
+                                    }
+                                })
                         .subscribe(new Action1<Observable<String>>() {
                             @Override
                             public void call(Observable<String> o) {
