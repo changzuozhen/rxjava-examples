@@ -1,7 +1,7 @@
 package union.uc.com.rxjava_example.api;
 
 import rx.Observable;
-import rx.functions.Action1;
+import rx.Subscriber;
 import rx.schedulers.Schedulers;
 import union.uc.com.rxjava_example.base.APIBaseActivity;
 import union.uc.com.rxjava_example.base.UIThreadExecutor;
@@ -18,10 +18,22 @@ public class SchedulerActivity extends APIBaseActivity {
         registery.add(Constants.Scheduler.io, new Runnable() {
             @Override
             public void run() {
-                Observable.just("a", "b").observeOn(Schedulers.io()).subscribe(new Action1<String>() {
+                Observable.just("a", "b").observeOn(Schedulers.io()).subscribe(new Subscriber<String>() {
                     @Override
-                    public void call(String s) {
-                        log(TAG, s + " on " + Thread.currentThread().getName());
+                    public void onCompleted() {
+                        log(TAG, "complete");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        log(TAG, "error " + e.toString());
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        String threadName = Thread.currentThread().getName();
+//                        Log.d(TAG, s + " on " + threadName);
+                        log(TAG, s + " on " + threadName);
                     }
                 });
             }
@@ -31,10 +43,22 @@ public class SchedulerActivity extends APIBaseActivity {
             public void run() {
                 Observable.just("a", "b")
                         .observeOn(Schedulers.computation())
-                        .subscribe(new Action1<String>() {
+                        .subscribe(new Subscriber<String>() {
                             @Override
-                            public void call(String s) {
-                                log(TAG, s + " on " + Thread.currentThread().getName());
+                            public void onCompleted() {
+                                log(TAG, "complete");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                log(TAG, "error " + e.toString());
+                            }
+
+                            @Override
+                            public void onNext(String s) {
+                                String threadName = Thread.currentThread().getName();
+//                        Log.d(TAG, s + " on " + threadName);
+                                log(TAG, s + " on " + threadName);
                             }
                         });
             }
@@ -44,10 +68,22 @@ public class SchedulerActivity extends APIBaseActivity {
             public void run() {
                 Observable.just("a", "b")
                         .observeOn(Schedulers.newThread())
-                        .subscribe(new Action1<String>() {
+                        .subscribe(new Subscriber<String>() {
                             @Override
-                            public void call(String s) {
-                                log(TAG, s + " on " + Thread.currentThread().getName());
+                            public void onCompleted() {
+                                log(TAG, "complete");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                log(TAG, "error " + e.toString());
+                            }
+
+                            @Override
+                            public void onNext(String s) {
+                                String threadName = Thread.currentThread().getName();
+//                        Log.d(TAG, s + " on " + threadName);
+                                log(TAG, s + " on " + threadName);
                             }
                         });
             }
@@ -57,13 +93,26 @@ public class SchedulerActivity extends APIBaseActivity {
             public void run() {
                 Observable.just("a", "b")
                         .observeOn(Schedulers.trampoline())
-                        .subscribe(new Action1<String>() {
+                        .subscribe(new Subscriber<String>() {
                             @Override
-                            public void call(String s) {
-                                log(TAG, s + " on " + Thread.currentThread().getName());
+                            public void onCompleted() {
+                                log(TAG, "complete");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                log(TAG, "error " + e.toString());
+                            }
+
+                            @Override
+                            public void onNext(String s) {
+                                String threadName = Thread.currentThread().getName();
+//                        Log.d(TAG, s + " on " + threadName);
+                                log(TAG, s + " on " + threadName);
                             }
                         });
-                log(TAG, "i'm on thread " + Thread.currentThread().getName());
+                String threadName = Thread.currentThread().getName();
+                log(TAG, "i'm on thread " + threadName);
             }
         });
         registery.add(Constants.Scheduler.immediate, new Runnable() {
@@ -71,13 +120,26 @@ public class SchedulerActivity extends APIBaseActivity {
             public void run() {
                 Observable.just("a", "b")
                         .observeOn(Schedulers.immediate())
-                        .subscribe(new Action1<String>() {
+                        .subscribe(new Subscriber<String>() {
                             @Override
-                            public void call(String s) {
-                                log(TAG, s + " on " + Thread.currentThread().getName());
+                            public void onCompleted() {
+                                log(TAG, "complete");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                log(TAG, "error " + e.toString());
+                            }
+
+                            @Override
+                            public void onNext(String s) {
+                                String threadName = Thread.currentThread().getName();
+//                        Log.d(TAG, s + " on " + threadName);
+                                log(TAG, s + " on " + threadName);
                             }
                         });
-                log(TAG, "i'm on thread " + Thread.currentThread().getName());
+                String threadName = Thread.currentThread().getName();
+                log(TAG, "i'm on thread " + threadName);
             }
         });
         registery.add(Constants.Scheduler.self_define, new Runnable() {
@@ -85,10 +147,22 @@ public class SchedulerActivity extends APIBaseActivity {
             public void run() {
                 Observable.just("a", "b")
                         .observeOn(Schedulers.from(UIThreadExecutor.SINGLETON))
-                        .subscribe(new Action1<String>() {
+                        .subscribe(new Subscriber<String>() {
                             @Override
-                            public void call(String s) {
-                                log(TAG, s + " on " + Thread.currentThread().getName());
+                            public void onCompleted() {
+                                log(TAG, "complete");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                log(TAG, "error " + e.toString());
+                            }
+
+                            @Override
+                            public void onNext(String s) {
+                                String threadName = Thread.currentThread().getName();
+//                        Log.d(TAG, s + " on " + threadName);
+                                log(TAG, s + " on " + threadName);
                             }
                         });
             }
