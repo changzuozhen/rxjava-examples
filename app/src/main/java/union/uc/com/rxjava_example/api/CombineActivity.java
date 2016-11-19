@@ -1,6 +1,5 @@
 package union.uc.com.rxjava_example.api;
 
-import android.util.Log;
 
 import java.util.concurrent.TimeUnit;
 

@@ -23,6 +23,8 @@ public class ConditionActivity extends APIBaseActivity {
 
     @Override
     protected void onRegisterAction(ActionRegistery registery) {
+
+        //给定多个Observable，只让第一个发射数据的Observable发射全部数据
         registery.add(Constants.Condition.amb, new Runnable() {
             @Override
             public void run() {
@@ -49,7 +51,10 @@ public class ConditionActivity extends APIBaseActivity {
                             public void call(Subscriber<? super Integer> subscriber) {
                                 sleep(TAG, 300);
                                 subscriber.onNext(3);
+                                sleep(TAG, 300);
                                 subscriber.onNext(33);
+                                sleep(TAG, 300);
+                                subscriber.onNext(333);
                                 subscriber.onCompleted();
                             }
                         }).subscribeOn(Schedulers.newThread())).subscribe(new Action1<Integer>() {
@@ -60,6 +65,8 @@ public class ConditionActivity extends APIBaseActivity {
                 });
             }
         });
+
+        // 发射来自原始Observable的数据，如果原始Observable没有发射数据，就发射一个默认数据
         registery.add(Constants.Condition.defaultIfEmpty, new Runnable() {
             @Override
             public void run() {
@@ -71,6 +78,8 @@ public class ConditionActivity extends APIBaseActivity {
                 });
             }
         });
+
+        // 如果满足一个条件，发射原始Observable的数据，然后重复发射直到不满足这个条件为止
         registery.add(Constants.Condition.doWhile, new Runnable() {
             @Override
             public void run() {
@@ -90,6 +99,8 @@ public class ConditionActivity extends APIBaseActivity {
                 });
             }
         });
+
+        // 只有当某个条件为真时才发射原始Observable的数据序列，否则发射一个空的或默认的序列
         registery.add(Constants.Condition.ifThen, new Runnable() {
             @Override
             public void run() {
@@ -109,6 +120,8 @@ public class ConditionActivity extends APIBaseActivity {
                 });
             }
         });
+
+        // 丢弃原始Observable发射的数据，直到第二个Observable发射了一个数据，然后发射原始Observable的剩余数据
         registery.add(Constants.Condition.skipUtil, new Runnable() {
             @Override
             public void run() {
@@ -132,6 +145,8 @@ public class ConditionActivity extends APIBaseActivity {
                         });
             }
         });
+
+        // 丢弃原始Observable发射的数据，直到一个特定的条件为假，然后发射原始Observable剩余的数据
         registery.add(Constants.Condition.skipWhile, new Runnable() {
             @Override
             public void run() {
@@ -148,6 +163,8 @@ public class ConditionActivity extends APIBaseActivity {
                 });
             }
         });
+
+        // 基于一个计算结果，发射一个指定Observable的数据序列
         registery.add(Constants.Condition.switchcase, new Runnable() {
             @Override
             public void run() {
@@ -173,6 +190,8 @@ public class ConditionActivity extends APIBaseActivity {
                 });
             }
         });
+
+        // 发射来自原始Observable的数据，直到第二个Observable发射了一个数据或一个通知
         registery.add(Constants.Condition.takeUntil, new Runnable() {
             @Override
             public void run() {
@@ -189,6 +208,9 @@ public class ConditionActivity extends APIBaseActivity {
                 });
             }
         });
+
+
+        // 发射原始Observable的数据，直到一个特定的条件为真，然后跳过剩余的数据
         registery.add(Constants.Condition.takeWhile, new Runnable() {
             @Override
             public void run() {
@@ -205,12 +227,17 @@ public class ConditionActivity extends APIBaseActivity {
                 });
             }
         });
+
+
+        // 发射原始Observable的数据，直到一个特定的条件为真，然后跳过剩余的数据
         registery.add(Constants.Condition.takeWhileWithIndex, new Runnable() {
             @Override
             public void run() {
                 logNotImplemented(TAG);
             }
         });
+
+        // 发射原始Observable的数据序列，然后重复发射这个序列直到不满足这个条件为止
         registery.add(Constants.Condition.WhileDo, new Runnable() {
             @Override
             public void run() {
@@ -229,6 +256,8 @@ public class ConditionActivity extends APIBaseActivity {
                 });
             }
         });
+
+// 判断是否所有的数据项都满足某个条件
         registery.add(Constants.Condition.all, new Runnable() {
             @Override
             public void run() {
@@ -245,6 +274,8 @@ public class ConditionActivity extends APIBaseActivity {
                 });
             }
         });
+
+        // 判断Observable是否会发射一个指定的值
         registery.add(Constants.Condition.contains, new Runnable() {
             @Override
             public void run() {
@@ -256,6 +287,8 @@ public class ConditionActivity extends APIBaseActivity {
                 });
             }
         });
+
+        // 判断Observable是否发射了一个值
         registery.add(Constants.Condition.exists, new Runnable() {
             @Override
             public void run() {
@@ -272,6 +305,8 @@ public class ConditionActivity extends APIBaseActivity {
                 });
             }
         });
+
+        // 判断Observable是否为空
         registery.add(Constants.Condition.isEmpty, new Runnable() {
             @Override
             public void run() {
@@ -283,6 +318,8 @@ public class ConditionActivity extends APIBaseActivity {
                 });
             }
         });
+
+        // 判断两个Observables发射的序列是否相等
         registery.add(Constants.Condition.sequenceEqual, new Runnable() {
             @Override
             public void run() {

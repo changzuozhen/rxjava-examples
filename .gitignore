@@ -34,3 +34,4 @@ captures/
 *.swp
 *.swo
 *.iml
+*.DS_Store

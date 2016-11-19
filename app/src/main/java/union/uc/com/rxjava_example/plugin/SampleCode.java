@@ -1092,38 +1092,41 @@ public class SampleCode {
                 "                        log(s);\n" +
                 "                      }\n" +
                 "                    });\n");
-        mCodes.put(Constants.Condition.amb, "    Observable.amb(Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
-                "                     @Override\n" +
-                "                     public void call(Subscriber<? super Integer> subscriber) {\n" +
-                "                       sleep(1000);\n" +
-                "                       subscriber.onNext(1);\n" +
-                "                       subscriber.onNext(11);\n" +
-                "                       subscriber.onCompleted();\n" +
-                "                     }\n" +
-                "                   }).subscribeOn(Schedulers.newThread()),\n" +
-                "                   Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
-                "                     @Override\n" +
-                "                     public void call(Subscriber<? super Integer> subscriber) {\n" +
-                "                       sleep(500);\n" +
-                "                       subscriber.onNext(2);\n" +
-                "                       subscriber.onNext(22);\n" +
-                "                       subscriber.onCompleted();\n" +
-                "                     }\n" +
-                "                   }).subscribeOn(Schedulers.newThread()),\n" +
-                "                   Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
-                "                     @Override\n" +
-                "                     public void call(Subscriber<? super Integer> subscriber) {\n" +
-                "                       sleep(300);\n" +
-                "                       subscriber.onNext(3);\n" +
-                "                       subscriber.onNext(33);\n" +
-                "                       subscriber.onCompleted();\n" +
-                "                     }\n" +
-                "                   }).subscribeOn(Schedulers.newThread())).subscribe(new Action1<Integer>() {\n" +
-                "      @Override\n" +
-                "      public void call(Integer integer) {\n" +
-                "        log(integer);\n" +
-                "      }\n" +
-                "    });\n");
+        mCodes.put(Constants.Condition.amb, "                Observable.amb(Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
+                "                            @Override\n" +
+                "                            public void call(Subscriber<? super Integer> subscriber) {\n" +
+                "                                sleep(TAG, 1000);\n" +
+                "                                subscriber.onNext(1);\n" +
+                "                                subscriber.onNext(11);\n" +
+                "                                subscriber.onCompleted();\n" +
+                "                            }\n" +
+                "                        }).subscribeOn(Schedulers.newThread()),\n" +
+                "                        Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
+                "                            @Override\n" +
+                "                            public void call(Subscriber<? super Integer> subscriber) {\n" +
+                "                                sleep(TAG, 500);\n" +
+                "                                subscriber.onNext(2);\n" +
+                "                                subscriber.onNext(22);\n" +
+                "                                subscriber.onCompleted();\n" +
+                "                            }\n" +
+                "                        }).subscribeOn(Schedulers.newThread()),\n" +
+                "                        Observable.create(new Observable.OnSubscribe<Integer>() {\n" +
+                "                            @Override\n" +
+                "                            public void call(Subscriber<? super Integer> subscriber) {\n" +
+                "                                sleep(TAG, 300);\n" +
+                "                                subscriber.onNext(3);\n" +
+                "                                sleep(TAG, 300);\n" +
+                "                                subscriber.onNext(33);\n" +
+                "                                sleep(TAG, 300);\n" +
+                "                                subscriber.onNext(333);\n" +
+                "                                subscriber.onCompleted();\n" +
+                "                            }\n" +
+                "                        }).subscribeOn(Schedulers.newThread())).subscribe(new Action1<Integer>() {\n" +
+                "                    @Override\n" +
+                "                    public void call(Integer integer) {\n" +
+                "                        log(TAG, integer);\n" +
+                "                    }\n" +
+                "                });\n");
         mCodes.put(Constants.Filter.elementAt, "    Observable.range(1, 10).elementAt(3).subscribe(new Action1<Integer>() {\n" +
                 "      @Override\n" +
                 "      public void call(Integer integer) {\n" +
