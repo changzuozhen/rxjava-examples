@@ -31,6 +31,7 @@
         <activity android:name=".sample.GroupByActivity" />
         <activity android:name=".sample.BufferActivity" />
         <activity android:name=".sample.OtherAPIActivity" />
+        <activity android:name=".sample.AndyTestActivity" />
         <activity android:name=".api.AsyncActivity" />
         <activity android:name=".api.BlockingObservableActivity" />
         <activity android:name=".api.CombineActivity" />

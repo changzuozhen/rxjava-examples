@@ -42,6 +42,7 @@ import union.uc.com.rxjava_example.api.TransformationActivity;
 import union.uc.com.rxjava_example.api.UtilityActivity;
 import union.uc.com.rxjava_example.base.Tuple;
 import union.uc.com.rxjava_example.sample.AdFetchActivity;
+import union.uc.com.rxjava_example.sample.AndyTestActivity;
 import union.uc.com.rxjava_example.sample.AutoCompleteActivity;
 import union.uc.com.rxjava_example.sample.BufferActivity;
 import union.uc.com.rxjava_example.sample.ConditionActivity;
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity
         mListAdapter.register("Group by", GroupByActivity.class);
         mListAdapter.register("Buffer", BufferActivity.class);
         mListAdapter.register("OtherAPI", OtherAPIActivity.class);
+        mListAdapter.register("AndyTest", AndyTestActivity.class);
         mListView.setAdapter(mListAdapter);
     }
 
